@@ -18,7 +18,7 @@ public class database {
                 System.out.println("fail");
             }
         } catch (ClassNotFoundException e) {
-            System.out.println("nottt found");
+            System.out.println("not found");
         }
 
 
