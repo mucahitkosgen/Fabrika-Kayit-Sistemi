@@ -18,6 +18,8 @@ public class musteri extends JFrame{
     private JTextField testyeritextField1;
     private JButton okbutton1;
     private JPanel musteri;
+    private JButton silbutton1;
+    private JButton guncellebutton1;
 
     public static Connection connect=null;
     public static Statement statement=null;
@@ -36,12 +38,42 @@ public class musteri extends JFrame{
                 String z =testyeritextField1.getText();
 
                 try {
-                    statement.executeUpdate("INSERT INTO musteri_ekleme VALUES ('" + x + "','" + y + "','" + z + "')");
+                    statement.executeUpdate("INSERT INTO musteri VALUES ('" + x + "','" + y + "','" + z + "')");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
 
+        });
+
+        silbutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String x=musteritextField1.getText();
+                String y=projeaditextField1.getText();
+                String z=testyeritextField1.getText();
+
+                try{
+                    statement.executeUpdate("DELETE FROM musteri where musteri='"+x+"'");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        guncellebutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String x=musteritextField1.getText();
+                String y=projeaditextField1.getText();
+                String z=testyeritextField1.getText();
+
+                try{
+                    statement.executeUpdate("UPDATE musteri set projeadi='"+y+"',testyeri='"+z+"'where musteri='"+x+"'");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
         });
 
 
@@ -51,10 +83,11 @@ public class musteri extends JFrame{
         JFrame frame = new musteri("Müşteri ekleme");
         frame.setVisible(true);
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection(url, user, pass);
+           // Class.forName("com.mysql.cj.jdbc.Driver");
+            //connect = DriverManager.getConnection(url, user, pass);
+            Connection connect=database.getConnection();
             statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from musteri_ekleme");
+            ResultSet resultSet = statement.executeQuery("select * from musteri");
             while (resultSet.next()) {
                 String musteri = resultSet.getString(1);
                 String projeadi = resultSet.getString(2);
@@ -63,9 +96,9 @@ public class musteri extends JFrame{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } //catch (ClassNotFoundException e) {
+            //e.printStackTrace();
+        //}
 
 
     }}
