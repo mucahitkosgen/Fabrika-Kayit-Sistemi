@@ -19,6 +19,7 @@ public class ekipman_bilgileri extends JFrame {
     private JTextField kaldirmatestitarihitextField1;
     private JButton okbutton1;
     private JButton silbutton1;
+    private JButton guncellebutton1;
 
     public static Connection connect=null;
     public static Statement statement=null;
@@ -67,6 +68,23 @@ public class ekipman_bilgileri extends JFrame {
 
             }
         });
+        guncellebutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String x = cihaztextField1.getText();
+                String y = tasiyiciortamtextField1.getText();
+                String z = muayenebolgesitextField1.getText();
+                String a=akimtipitextField1.getText();
+                String b=yuzeytextField1.getText();
+                String c=kaldirmatestitarihitextField1.getText();
+                try{
+                    statement.executeUpdate("UPDATE ekipman_bilgileri set tasiyiciortam='"+y+"', muayenebolgesi='"+z+"',akimtipi='"+a+"',yuzey='"+b+"',kaldirmatestitarihi='"+c+"' where cihaz='"+x+"'");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
 
     }
@@ -75,8 +93,9 @@ public class ekipman_bilgileri extends JFrame {
         JFrame frame = new ekipman_bilgileri("ekipmanbilgileri");
         frame.setVisible(true);
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection(url, user, pass);
+            //Class.forName("com.mysql.cj.jdbc.Driver");
+            //connect = DriverManager.getConnection(url, user, pass);
+            Connection connect=database.getConnection();
             statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from ekipman_bilgileri");
             while (resultSet.next()) {
@@ -90,9 +109,9 @@ public class ekipman_bilgileri extends JFrame {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } //catch (ClassNotFoundException e) {
+           // e.printStackTrace();
+        //}
 
 
     }}
