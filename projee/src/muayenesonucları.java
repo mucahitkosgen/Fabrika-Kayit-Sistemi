@@ -15,6 +15,7 @@ public class muayenesonucları extends JFrame{
     private JButton okbutton1;
     private JButton silbutton1;
     private JFormattedTextField sonucTextField1;
+    private JButton guncellebutton1;
 
     public static Connection connect=null;
     public static Statement statement=null;
@@ -60,14 +61,29 @@ public class muayenesonucları extends JFrame{
                 }
             }
         });
+        guncellebutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String x = serinotextField1.getText();
+                String y = kaynaknotextField1.getText();
+                String z = kaynakyontextField1.getText();
+                String a=sonucTextField1.getText();
+                try{
+                    statement.executeUpdate("UPDATE muayenesonucları set kaynakno='"+y+"',kaynakyon='"+z+"',sonuc='"+a+"'where serino='"+x+"'");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
+            }
+        });
     }
     public static void main(String[] args) {
         JFrame frame=new muayenesonucları("Muayene Sonuçları");
         frame.setVisible(true);
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection(url, user, pass);
+           // Class.forName("com.mysql.cj.jdbc.Driver");
+            //connect = DriverManager.getConnection(url, user, pass);
+            Connection connect=database.getConnection();
             statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from muayenesonucları");
             while (resultSet.next()) {
@@ -79,9 +95,9 @@ public class muayenesonucları extends JFrame{
             }
         } catch (SQLException e){
             e.printStackTrace();
-        }catch (ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        }//catch (ClassNotFoundException e){
+           // e.printStackTrace();
+        //}
 
 
     }
