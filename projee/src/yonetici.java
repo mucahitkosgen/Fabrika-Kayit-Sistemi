@@ -99,7 +99,7 @@ public class yonetici extends JFrame {
         } //catch (ClassNotFoundException e) {
             //e.printStackTrace();
         //}
-
+//
     }
 }
 
