@@ -34,7 +34,7 @@ public class ekipman_bilgileri extends JFrame {
     private JTextField muayeneortamitextField1;
     private JLabel miknatisgiderimiLabel;
     private JTextField miknatisgiderimitextField1;
-    private JLabel isilislemLabel;
+    private JLabel isilislemLabel;//
     private JTextField isilislemtextField1;
     private JLabel yuzeysicakligiLabel;
     private JTextField yuzeysicakligitextField1;
