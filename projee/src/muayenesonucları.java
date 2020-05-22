@@ -9,13 +9,23 @@ public class muayenesonucları extends JFrame{
     private JTextField serinotextField1;
     private JLabel kaynaknoLabel;
     private JTextField kaynaknotextField1;
+    private JLabel kontroluzunluguLabel;
+    private JTextField kontroluzunlugutextField1;
     private JLabel kaynakyonLabel;
-    private JTextField kaynakyontextField1;
-    private JLabel sonucLabel;
     private JButton okbutton1;
     private JButton silbutton1;
-    private JFormattedTextField sonucTextField1;
+    private JFormattedTextField kaynakyonTextField1;
     private JButton guncellebutton1;
+    private JLabel kalinlikLabel;
+    private JTextField kalinliktextField1;
+    private JLabel capLabel;
+    private JTextField captextField1;
+    private JLabel hatatipiLabel;
+    private JTextField hatatipitextField1;
+    private JLabel hataninyeriLabel;
+    private JTextField hataninyeritextField1;
+    private JLabel sonucLabel;
+    private JTextField sonuctextField1;
 
     public static Connection connect=null;
     public static Statement statement=null;
@@ -33,8 +43,13 @@ public class muayenesonucları extends JFrame{
 
                 String x = serinotextField1.getText();
                 String y = kaynaknotextField1.getText();
-                String z = kaynakyontextField1.getText();
-                String a=sonucTextField1.getText();
+                String z = kontroluzunlugutextField1.getText();
+                String a= kaynakyonTextField1.getText();
+                String b=kalinliktextField1.getText();
+                String c=captextField1.getText();
+                String d=hatatipitextField1.getText();
+                String f=hataninyeritextField1.getText();
+                String g=sonuctextField1.getText();
 
                 try {
 
@@ -51,11 +66,16 @@ public class muayenesonucları extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 String x = serinotextField1.getText();
                 String y = kaynaknotextField1.getText();
-                String z = kaynakyontextField1.getText();
-                String a=sonucTextField1.getText();
+                String z = kontroluzunlugutextField1.getText();
+                String a= kaynakyonTextField1.getText();
+                String b=kalinliktextField1.getText();
+                String c=captextField1.getText();
+                String d=hatatipitextField1.getText();
+                String f=hataninyeritextField1.getText();
+                String g=sonuctextField1.getText();
 
                 try {
-                    statement.executeUpdate("INSERT INTO muayenesonucları VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"')");
+                    statement.executeUpdate("INSERT INTO muayenesonucları VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+b+"','"+c+"','"+d+"','"+f+"','"+g+"')");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -66,10 +86,15 @@ public class muayenesonucları extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 String x = serinotextField1.getText();
                 String y = kaynaknotextField1.getText();
-                String z = kaynakyontextField1.getText();
-                String a=sonucTextField1.getText();
+                String z = kontroluzunlugutextField1.getText();
+                String a= kaynakyonTextField1.getText();
+                String b=kalinliktextField1.getText();
+                String c=captextField1.getText();
+                String d=hatatipitextField1.getText();
+                String f=hataninyeritextField1.getText();
+                String g=sonuctextField1.getText();
                 try{
-                    statement.executeUpdate("UPDATE muayenesonucları set kaynakno='"+y+"',kaynakyon='"+z+"',sonuc='"+a+"'where serino='"+x+"'");
+                    statement.executeUpdate("UPDATE muayenesonucları set kaynakno='"+y+"',kontroluzunlugu='"+z+"',kaynakyon='"+a+"',kalinlik='"+b+"',cap='"+c+"',hatatipi='"+d+"',hataninyeri='"+f+"',sonuc='"+g+"'where serino='"+x+"'");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -89,9 +114,13 @@ public class muayenesonucları extends JFrame{
             while (resultSet.next()) {
                 String serino = resultSet.getString(1);
                 String kaynakno = resultSet.getString(2);
-                String kaynakyon = resultSet.getString(3);
-                String sonuc=resultSet.getString(4);
-                System.out.println(serino + " " +kaynakno  + " "+kaynakyon+" "+sonuc);
+                String kontroluzunlugu = resultSet.getString(3);
+                String kalinlik=resultSet.getString(4);
+                String cap=resultSet.getString(5);
+                String hatatipi=resultSet.getString(6);
+                String hataninyeri=resultSet.getString(7);
+                String sonuc=resultSet.getString(8);
+                System.out.println(serino + " " +kaynakno  + " "+kontroluzunlugu+" "+kalinlik+" "+cap+" "+hatatipi+" "+hataninyeri+" "+sonuc);
             }
         } catch (SQLException e){
             e.printStackTrace();
