@@ -67,10 +67,10 @@ public class AdvancedDb2ExcelExporter {
         while (result.next()) {
             Row row = sheet.createRow(rowCount++);
 
-            for (int i = 2; i <= numberOfColumns; i++) {
+            for (int i = 1; i <= numberOfColumns; i++) {
                 Object valueObject = result.getObject(i);
 
-                Cell cell = row.createCell(i - 2);
+                Cell cell = row.createCell(i - 1);
 
                 if (valueObject instanceof Boolean)
                     cell.setCellValue((Boolean) valueObject);
@@ -105,9 +105,9 @@ public class AdvancedDb2ExcelExporter {
 
 
         // exclude the first column which is the ID field
-        for (int i = 2; i <= numberOfColumns; i++) {
+        for (int i = 1; i <= numberOfColumns; i++) {
             String columnName = metaData.getColumnName(i);
-            Cell headerCell = headerRow.createCell(i - 2);
+            Cell headerCell = headerRow.createCell(i - 1);
             headerCell.setCellValue(columnName);
         }
     }
