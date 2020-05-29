@@ -1,8 +1,15 @@
-import javax.swing.*;
-import javax.swing.*;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -17,6 +24,9 @@ public class yonetici extends JFrame {
     private JButton okbutton1;
     private JButton silbutton1;
     private JButton guncellebutton1;
+    private JButton ExportforExcelbutton1;
+    private JButton ExportforPdfbutton1;
+
 
     public static Connection connect = null;
     public static Statement statement = null;
@@ -25,16 +35,22 @@ public class yonetici extends JFrame {
     public static String user = "root", pass = "Kule1845";
 
 
+
+
+
     public yonetici(String title){
         super(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(yonetici);
 
+        JLabel label=new JLabel("yoneticiisim");
+
 
         okbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String x = yoneticiisimtextField1.getText();
+                String x=yoneticiisimtextField1.getText();
+
                 String y = sıfrepasswordField1.getText();
 
                 try {
@@ -73,9 +89,113 @@ public class yonetici extends JFrame {
             }
         });
 
+        ExportforExcelbutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                AdvancedDb2ExcelExporter exporter=new AdvancedDb2ExcelExporter();
+                exporter.export("yonetici");
+            }
+        });
+        ExportforPdfbutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String url = "jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
+                String user = "root";
+                String pass = "Kule1845";
+                try {
+                    Class.forName ("com.mysql.cj.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Connection conn = null;
+                try {
+                    conn = DriverManager.getConnection(url,user,pass);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                Statement stmt = null;
+                try {
+                    stmt = conn.createStatement();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                ResultSet query_set = null;
+                try {
+                    query_set = stmt.executeQuery("SELECT * FROM yonetici ");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                Document my_pdf_report = new Document();
+                try {
+                    PdfWriter.getInstance(my_pdf_report, new FileOutputStream("yonetici.pdf"));
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                my_pdf_report.open();
+                PdfPTable my_report_table = new PdfPTable(2);
+                PdfPCell table_cell;
+                while (true) {
+                    try {
+                        if (!query_set.next()) break;
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    String yoneticiisim = null;
+                    try {
+                        yoneticiisim = query_set.getString("yoneticiisim");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(yoneticiisim));
+                    my_report_table.addCell(table_cell);
+                    String sıfre= null;
+                    try {
+                        sıfre = query_set.getString("sıfre");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(sıfre));
+                    my_report_table.addCell(table_cell);
+
+
+                }
+                try {
+                    my_pdf_report.add(my_report_table);
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
+                my_pdf_report.close();
+
+
+                try {
+                    query_set.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
 
     }
+
+
+
+
+
 
 
 
@@ -84,23 +204,26 @@ public class yonetici extends JFrame {
         JFrame frame = new yonetici("Yönetici giriş");
         frame.setVisible(true);
         try {
-            //Class.forName("com.mysql.cj.jdbc.Driver");
-            //connect = DriverManager.getConnection(url, user, pass);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connect = DriverManager.getConnection(url, user, pass);
             Connection connect=database.getConnection();
             statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from yonetici");
             while (resultSet.next()) {
                 String yoneticiisim = resultSet.getString(1);
                 String sifre = resultSet.getString(2);
-                System.out.println(yoneticiisim + " " + sifre + " " );
+                System.out.println( yoneticiisim+" " + sifre + " " );
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } //catch (ClassNotFoundException e) {
-            //e.printStackTrace();
-        //}
-//
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
+
+
+
 }
 
 
