@@ -147,7 +147,7 @@ public class yonetici extends JFrame {
                     try {
                         yoneticiisim = query_set.getString("yoneticiisim");
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        e.printStackTrace();//
                     }
                     table_cell=new PdfPCell(new Phrase(yoneticiisim));
                     my_report_table.addCell(table_cell);
