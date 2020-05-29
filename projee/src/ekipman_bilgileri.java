@@ -1,6 +1,15 @@
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.*;
 
 public class ekipman_bilgileri extends JFrame {
@@ -17,9 +26,6 @@ public class ekipman_bilgileri extends JFrame {
     private JTextField yuzeytextField1;
     private JLabel kaldirmatestitarihiLabel;
     private JTextField kaldirmatestitarihitextField1;
-    private JButton okbutton1;
-    private JButton silbutton1;
-    private JButton guncellebutton1;
     private JLabel kutupmesafesiLabel;
     private JTextField kutupmesafesitextField1;
     private JLabel miknatislamateknigiLabel;
@@ -40,6 +46,21 @@ public class ekipman_bilgileri extends JFrame {
     private JTextField yuzeysicakligitextField1;
     private JLabel isikcihaztanimiLabel;
     private JTextField isikcihaztanimitextField1;
+    private JButton okbutton1;
+    private JButton silbutton1;
+    private JButton guncellebutton1;
+    private JComboBox cihazcomboBox1;
+    private JComboBox tasiyiciortamcomboBox1;
+    private JComboBox akimtipicomboBox1;
+    private JComboBox kutupmesafesicomboBox1;
+    private JComboBox miknatislamateknigicomboBox1;
+    private JComboBox uvisiksiddeticomboBox1;
+    private JComboBox isikmesafesicomboBox1;
+    private JLabel muayenebolgesialansiddetiLabel;
+    private JTextField muayenebolgesialansiddetitextField1;
+    private JButton ExportforExcelbutton1;
+    private JButton ExportforPdfbutton1;
+
 
     public static Connection connect=null;
     public static Statement statement=null;
@@ -50,28 +71,254 @@ public class ekipman_bilgileri extends JFrame {
         super(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(ekipman_bilgileri);
+        ExportforExcelbutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                AdvancedDb2ExcelExporter exporter=new AdvancedDb2ExcelExporter();
+                exporter.export("ekipman_bilgileri");
+            }
+        });
+        ExportforPdfbutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String url = "jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
+                String user = "root";
+                String pass = "Kule1845";
+                try {
+                    Class.forName ("com.mysql.cj.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Connection conn = null;
+                try {
+                    conn = DriverManager.getConnection(url,user,pass);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                Statement stmt = null;
+                try {
+                    stmt = conn.createStatement();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                ResultSet query_set = null;
+                try {
+                    query_set = stmt.executeQuery("SELECT * FROM ekipman_bilgileri ");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                Document my_pdf_report = new Document();
+                try {
+                    PdfWriter.getInstance(my_pdf_report, new FileOutputStream("ekipman_bilgileri.pdf"));
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                my_pdf_report.open();
+                PdfPTable my_report_table = new PdfPTable(17);
+                PdfPCell table_cell;
+                while (true) {
+                    try {
+                        if (!query_set.next()) break;
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    String cihaz = null;
+                    try {
+                        cihaz = query_set.getString("cihaz");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(cihaz));
+                    my_report_table.addCell(table_cell);
+                    String tasiyiciortam= null;
+                    try {
+                        tasiyiciortam = query_set.getString("tasiyiciortam");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(tasiyiciortam));
+                    my_report_table.addCell(table_cell);
+                    String muayenebolgesi= null;
+                    try {
+                        muayenebolgesi = query_set.getString("muayenebolgesi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(muayenebolgesi));
+                    my_report_table.addCell(table_cell);
+                    String akimtipi = null;
+                    try {
+                        akimtipi = query_set.getString("akimtipi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(akimtipi));
+                    my_report_table.addCell(table_cell);
+                    String yuzey= null;
+                    try {
+                        yuzey = query_set.getString("yuzey");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(yuzey));
+                    my_report_table.addCell(table_cell);
+                    String kaldirmatestitarihi= null;
+                    try {
+                        kaldirmatestitarihi = query_set.getString("kaldirmatestitarihi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(kaldirmatestitarihi));
+                    my_report_table.addCell(table_cell);
+                    String kutupmesafesi = null;
+                    try {
+                        kutupmesafesi = query_set.getString("kutupmesafesi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(kutupmesafesi));
+                    my_report_table.addCell(table_cell);
+                    String miknatislamateknigi= null;
+                    try {
+                        miknatislamateknigi = query_set.getString("miknatislamateknigi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(miknatislamateknigi));
+                    my_report_table.addCell(table_cell);
+                    String uvisiksiddeti= null;
+                    try {
+                        uvisiksiddeti = query_set.getString("uvisiksiddeti");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(uvisiksiddeti));
+                    my_report_table.addCell(table_cell);
+                    String isikmesafesi = null;
+                    try {
+                        isikmesafesi = query_set.getString("isikmesafesi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(isikmesafesi));
+                    my_report_table.addCell(table_cell);
+                    String isiksiddeti= null;
+                    try {
+                        isiksiddeti = query_set.getString("isiksiddeti");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(isiksiddeti));
+                    my_report_table.addCell(table_cell);
+                    String muayeneortami= null;
+                    try {
+                        muayeneortami = query_set.getString("muayeneortami");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(muayeneortami));
+                    my_report_table.addCell(table_cell);
+                    String miknatisgiderimi = null;
+                    try {
+                        miknatisgiderimi = query_set.getString("miknatisgiderimi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(miknatisgiderimi));
+                    my_report_table.addCell(table_cell);
+                    String isilislem= null;
+                    try {
+                        isilislem = query_set.getString("isilislem");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(isilislem));
+                    my_report_table.addCell(table_cell);
+                    String yuzeysicakligi= null;
+                    try {
+                        yuzeysicakligi = query_set.getString("yuzeysicakligi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(yuzeysicakligi));
+                    my_report_table.addCell(table_cell);
+                    String isikcihaztanimi = null;
+                    try {
+                        isikcihaztanimi = query_set.getString("isikcihaztanimi");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(isikcihaztanimi));
+                    my_report_table.addCell(table_cell);
+                    String muayenebolgesialansiddeti= null;
+                    try {
+                        muayenebolgesialansiddeti = query_set.getString("muayenebolgesialansiddeti");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(muayenebolgesialansiddeti));
+                    my_report_table.addCell(table_cell);
+
+
+                }
+                try {
+                    my_pdf_report.add(my_report_table);
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
+                my_pdf_report.close();
+
+
+                try {
+                    query_set.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         okbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String x = cihaztextField1.getText();
-                String y =tasiyiciortamtextField1.getText();
+                String x = cihazcomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,x);
+                String y =tasiyiciortamcomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,y);
                 String z =muayenebolgesitextField1.getText();
-                String a=akimtipitextField1.getText();
+                String a=akimtipicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,a);
                 String b=yuzeytextField1.getText();
                 String c=kaldirmatestitarihitextField1.getText();
-                String d=kutupmesafesitextField1.getText();
-                String p=miknatislamateknigitextField1.getText();
-                String f=uvisiksiddetitextField1.getText();
-                String g=isikmesafesitextField1.getText();
+                String d=kutupmesafesicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,d);
+                String p=miknatislamateknigicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,p);
+                String f=uvisiksiddeticomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,f);
+                String g=isikmesafesicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,g);
                 String h=isiksiddetitextField1.getText();
                 String ı=muayeneortamitextField1.getText();
                 String i=miknatisgiderimitextField1.getText();
                 String j=isilislemtextField1.getText();
                 String k=yuzeysicakligitextField1.getText();
                 String l=isikcihaztanimitextField1.getText();
+                String m=muayenebolgesialansiddetitextField1.getText();
 
                 try {
-                    statement.executeUpdate("INSERT INTO ekipman_bilgileri VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+ b +"','"+ c +",'"+d+"'p'"+"','"+f+"','"+g+"','"+h+"','"+ı+"','"+i+"','"+j+"','"+k+"','"+l+"')");
+                    statement.executeUpdate("INSERT INTO ekipman_bilgileri VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+ b +"','"+ c +"','"+d+"','"+p+"','"+f+"','"+g+"','"+h+"','"+ı+"','"+i+"','"+j+"','"+k+"','"+l+"','"+m+"')");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -81,23 +328,32 @@ public class ekipman_bilgileri extends JFrame {
         silbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
-                String x = cihaztextField1.getText();
-                String y = tasiyiciortamtextField1.getText();
-                String z = muayenebolgesitextField1.getText();
-                String a=akimtipitextField1.getText();
+                String x=cihazcomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,x);
+                String y =tasiyiciortamcomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,y);
+                String z =muayenebolgesitextField1.getText();
+                String a=akimtipicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,a);
                 String b=yuzeytextField1.getText();
                 String c=kaldirmatestitarihitextField1.getText();
-                String d=kutupmesafesitextField1.getText();
-                String p=miknatislamateknigitextField1.getText();
-                String f=uvisiksiddetitextField1.getText();
-                String g=isikmesafesitextField1.getText();
+                String d=kutupmesafesicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,d);
+                String p=miknatislamateknigicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,p);
+                String f=uvisiksiddeticomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,f);
+                String g=isikmesafesicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,g);
                 String h=isiksiddetitextField1.getText();
                 String ı=muayeneortamitextField1.getText();
                 String i=miknatisgiderimitextField1.getText();
                 String j=isilislemtextField1.getText();
                 String k=yuzeysicakligitextField1.getText();
                 String l=isikcihaztanimitextField1.getText();
+                String m=muayenebolgesialansiddetitextField1.getText();
+
+
                 try {
 
                     statement.executeUpdate("DELETE FROM ekipman_bilgileri where cihaz='"+x+"'");
@@ -111,24 +367,32 @@ public class ekipman_bilgileri extends JFrame {
         guncellebutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String x = cihaztextField1.getText();
-                String y = tasiyiciortamtextField1.getText();
-                String z = muayenebolgesitextField1.getText();
-                String a=akimtipitextField1.getText();
+                String x = cihazcomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,x);
+                String y =tasiyiciortamcomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,y);
+                String z =muayenebolgesitextField1.getText();
+                String a=akimtipicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,a);
                 String b=yuzeytextField1.getText();
                 String c=kaldirmatestitarihitextField1.getText();
-                String d=kutupmesafesitextField1.getText();
-                String p=miknatislamateknigitextField1.getText();
-                String f=uvisiksiddetitextField1.getText();
-                String g=isikmesafesitextField1.getText();
+                String d=kutupmesafesicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,d);
+                String p=miknatislamateknigicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,p);
+                String f=uvisiksiddeticomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,f);
+                String g=isikmesafesicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,g);
                 String h=isiksiddetitextField1.getText();
                 String ı=muayeneortamitextField1.getText();
                 String i=miknatisgiderimitextField1.getText();
                 String j=isilislemtextField1.getText();
                 String k=yuzeysicakligitextField1.getText();
                 String l=isikcihaztanimitextField1.getText();
+                String m=muayenebolgesialansiddetitextField1.getText();
                 try{
-                    statement.executeUpdate("UPDATE ekipman_bilgileri set tasiyiciortam='"+y+"', muayenebolgesi='"+z+"',akimtipi='"+a+"',yuzey='"+b+"',kaldirmatestitarihi='"+c+"',kutupmesafesi='"+d+"',miknatislamateknigi='"+p+"',uvisiksiddeti='"+f+"',isikmesafesi='"+g+"',isiksiddeti='"+h+"',muayeneortami='"+ı+"',miknatisgiderimi='"+i+"',isilislem='"+j+"',yuzeysicakligi='"+k+"',isikcihaztanimi='"+l+"' where cihaz='"+x+"'");
+                    statement.executeUpdate("UPDATE ekipman_bilgileri set tasiyiciortam='"+y+"', muayenebolgesi='"+z+"',akimtipi='"+a+"',yuzey='"+b+"',kaldirmatestitarihi='"+c+"',kutupmesafesi='"+d+"',miknatislamateknigi='"+p+"',uvisiksiddeti='"+f+"',isikmesafesi='"+g+"',isiksiddeti='"+h+"',muayeneortami='"+ı+"',miknatisgiderimi='"+i+"',isilislem='"+j+"',yuzeysicakligi='"+k+"',isikcihaztanimi='"+l+"',muayenebolgesialansiddeti='"+m+"' where cihaz='"+x+"'");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -141,6 +405,21 @@ public class ekipman_bilgileri extends JFrame {
 
     public static void main(String[] args) {
         JFrame frame = new ekipman_bilgileri("ekipmanbilgileri");
+        JComboBox cihazcomboBox=new JComboBox();
+        DefaultComboBoxModel comboBoxModel=new DefaultComboBoxModel();
+        comboBoxModel.setSelectedItem(cihazcomboBox);
+        JComboBox tasiyiciortamcomboBox=new JComboBox();
+        comboBoxModel.setSelectedItem(tasiyiciortamcomboBox);
+        JComboBox akimtipicomboBox=new JComboBox();
+        comboBoxModel.setSelectedItem(akimtipicomboBox);
+        JComboBox kutupmesafesicomboBox=new JComboBox();
+        comboBoxModel.setSelectedItem(kutupmesafesicomboBox);
+        JComboBox miknatislamateknigicomboBox=new JComboBox();
+        comboBoxModel.setSelectedItem(miknatislamateknigicomboBox);
+        JComboBox uvisiksiddeticomboBox=new JComboBox();
+        comboBoxModel.setSelectedItem(uvisiksiddeticomboBox);
+        JComboBox isikmesafesicomboBox=new JComboBox();
+        comboBoxModel.setSelectedItem(isikmesafesicomboBox);
         frame.setVisible(true);
         try {
             //Class.forName("com.mysql.cj.jdbc.Driver");
@@ -165,6 +444,7 @@ public class ekipman_bilgileri extends JFrame {
                 String isilislem=resultSet.getString(14);
                 String yuzeysicakligi=resultSet.getString(15);
                 String isikcihaztanimi=resultSet.getString(16);
+                String muayenebolgesialansiddeti=resultSet.getString(17);
                 System.out.println(cihaz + " " + tasiyiciortam + " " +muayenebolgesi+" "+ akimtipi+" "+yuzey+" "+kaldirmatestitarihi+" "+kutupmesafesi+" "+miknatislamateknigi+" "+uvisiksiddeti+" "+isikmesafesi+" "+isiksiddeti+" "+muayeneortami+" "+miknatisgiderimi+" "+isilislem+" "+yuzeysicakligi+" "+isikcihaztanimi);
             }
         } catch (SQLException e) {
