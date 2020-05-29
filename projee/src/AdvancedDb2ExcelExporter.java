@@ -13,9 +13,10 @@ public class AdvancedDb2ExcelExporter {
         AdvancedDb2ExcelExporter exporter = new AdvancedDb2ExcelExporter();
         exporter.export("yonetici");
         exporter.export("muayene");
-        exporter.export("musteri");
+        exporter.export("musterii");
         exporter.export("ekipman_bilgileri");
         exporter.export("muayenesonucları");
+        exporter.export("yonetici");
         
         
     }
@@ -24,7 +25,7 @@ public class AdvancedDb2ExcelExporter {
         String dateTimeInfo = dateFormat.format(new Date());
         return baseName.concat(String.format("yonetici.xlsx", dateTimeInfo));}
 
-    private void export(String yonetici) {
+    void export(String yonetici) {
         String url = "jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
         String user = "root";
         String pass = "Kule1845";
