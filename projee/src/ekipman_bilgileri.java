@@ -6,6 +6,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -60,6 +61,7 @@ public class ekipman_bilgileri extends JFrame {
     private JTextField muayenebolgesialansiddetitextField1;
     private JButton ExportforExcelbutton1;
     private JButton ExportforPdfbutton1;
+    private JButton devambutton1;
 
 
     public static Connection connect=null;
@@ -76,6 +78,18 @@ public class ekipman_bilgileri extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 AdvancedDb2ExcelExporter exporter=new AdvancedDb2ExcelExporter();
                 exporter.export("ekipman_bilgileri");
+            }
+        });
+        devambutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                muayenesonucları field=new muayenesonucları();
+                field.setVisible(true);
+                JFrame frame = new muayenesonucları("Muayene Sonuclari");
+                frame.setSize(700,700);
+                frame.setVisible(true);
+
+                setVisible(false);
             }
         });
         ExportforPdfbutton1.addActionListener(new ActionListener() {
@@ -403,8 +417,14 @@ public class ekipman_bilgileri extends JFrame {
 
     }
 
+    public ekipman_bilgileri() {
+
+    }
+
     public static void main(String[] args) {
         JFrame frame = new ekipman_bilgileri("ekipmanbilgileri");
+        frame.setSize(700,700);
+        frame.setLocationRelativeTo(null);
         JComboBox cihazcomboBox=new JComboBox();
         DefaultComboBoxModel comboBoxModel=new DefaultComboBoxModel();
         comboBoxModel.setSelectedItem(cihazcomboBox);
