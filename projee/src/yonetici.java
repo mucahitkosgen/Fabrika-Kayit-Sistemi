@@ -97,7 +97,7 @@ public class yonetici extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 String  x=yoneticiisimtextField1.getText();
                 String y=sıfrepasswordField1.getText();
-
+//
                 try{
                     statement.executeUpdate("UPDATE yonetici set sifre='"+y+"' where yoneticiisim='"+x+"'");
                 } catch (SQLException e) {
