@@ -91,7 +91,7 @@ public class ekipman_bilgileri extends JFrame {
 
                 setVisible(false);
             }
-        });
+        });//
         ExportforPdfbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
