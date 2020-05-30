@@ -6,6 +6,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -37,6 +38,7 @@ public class muayenesonucları extends JFrame{
     private JComboBox sonuccomboBox1;
     private JButton ExportforExcelbutton1;
     private JButton ExportforPdfbutton1;
+    private JButton devambutton1;
     private JTextField sonuctextField1;
 
     public static Connection connect=null;
@@ -45,14 +47,14 @@ public class muayenesonucları extends JFrame{
     public static String url="jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
     public  static String user="root",pass="Kule1845";
 
-    public muayenesonucları(String title){
+    public muayenesonucları(String title) {
         super(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(muayenesonucları);
         ExportforExcelbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                AdvancedDb2ExcelExporter exporter=new AdvancedDb2ExcelExporter();
+                AdvancedDb2ExcelExporter exporter = new AdvancedDb2ExcelExporter();
                 exporter.export("muayenesonucları");
             }
         });
@@ -63,13 +65,13 @@ public class muayenesonucları extends JFrame{
                 String user = "root";
                 String pass = "Kule1845";
                 try {
-                    Class.forName ("com.mysql.cj.jdbc.Driver");
+                    Class.forName("com.mysql.cj.jdbc.Driver");
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
                 Connection conn = null;
                 try {
-                    conn = DriverManager.getConnection(url,user,pass);
+                    conn = DriverManager.getConnection(url, user, pass);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -109,23 +111,23 @@ public class muayenesonucları extends JFrame{
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(serino));
+                    table_cell = new PdfPCell(new Phrase(serino));
                     my_report_table.addCell(table_cell);
-                    String kaynakno= null;
+                    String kaynakno = null;
                     try {
                         kaynakno = query_set.getString("kaynakno");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(kaynakno));
+                    table_cell = new PdfPCell(new Phrase(kaynakno));
                     my_report_table.addCell(table_cell);
-                    String kontroluzunlugu= null;
+                    String kontroluzunlugu = null;
                     try {
                         kontroluzunlugu = query_set.getString("kontroluzunlugu");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(kontroluzunlugu));
+                    table_cell = new PdfPCell(new Phrase(kontroluzunlugu));
                     my_report_table.addCell(table_cell);
                     String kaynakyon = null;
                     try {
@@ -133,23 +135,23 @@ public class muayenesonucları extends JFrame{
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(kaynakyon));
+                    table_cell = new PdfPCell(new Phrase(kaynakyon));
                     my_report_table.addCell(table_cell);
-                    String kalinlik= null;
+                    String kalinlik = null;
                     try {
                         kalinlik = query_set.getString("kalinlik");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(kalinlik));
+                    table_cell = new PdfPCell(new Phrase(kalinlik));
                     my_report_table.addCell(table_cell);
-                    String cap= null;
+                    String cap = null;
                     try {
                         cap = query_set.getString("cap");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(cap));
+                    table_cell = new PdfPCell(new Phrase(cap));
                     my_report_table.addCell(table_cell);
                     String hatatipi = null;
                     try {
@@ -157,23 +159,23 @@ public class muayenesonucları extends JFrame{
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(hatatipi));
+                    table_cell = new PdfPCell(new Phrase(hatatipi));
                     my_report_table.addCell(table_cell);
-                    String hataninyeri= null;
+                    String hataninyeri = null;
                     try {
                         hataninyeri = query_set.getString("hataninyeri");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(hataninyeri));
+                    table_cell = new PdfPCell(new Phrase(hataninyeri));
                     my_report_table.addCell(table_cell);
-                    String sonuc= null;
+                    String sonuc = null;
                     try {
                         sonuc = query_set.getString("sonuc");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell=new PdfPCell(new Phrase(sonuc));
+                    table_cell = new PdfPCell(new Phrase(sonuc));
                     my_report_table.addCell(table_cell);
 
                 }
@@ -209,17 +211,17 @@ public class muayenesonucları extends JFrame{
                 String x = serinotextField1.getText();
                 String y = kaynaknotextField1.getText();
                 String z = kontroluzunlugutextField1.getText();
-                String a= kaynakyonTextField1.getText();
-                String b=kalinliktextField1.getText();
-                String c=captextField1.getText();
-                String d=hatatipitextField1.getText();
-                String f=hataninyeritextField1.getText();
-                String g=sonuccomboBox1.getSelectedItem().toString();
-                JOptionPane.showMessageDialog(null,g);
+                String a = kaynakyonTextField1.getText();
+                String b = kalinliktextField1.getText();
+                String c = captextField1.getText();
+                String d = hatatipitextField1.getText();
+                String f = hataninyeritextField1.getText();
+                String g = sonuccomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null, g);
 
                 try {
 
-                    statement.executeUpdate("DELETE FROM muayenesonucları where serino='"+x+"'");
+                    statement.executeUpdate("DELETE FROM muayenesonucları where serino='" + x + "'");
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -227,6 +229,8 @@ public class muayenesonucları extends JFrame{
 
             }
         });
+
+
         okbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -270,8 +274,15 @@ public class muayenesonucları extends JFrame{
             }
         });
     }
+
+    public muayenesonucları() {
+
+    }
+
     public static void main(String[] args) {
         JFrame frame=new muayenesonucları("Muayene Sonuçları");
+        frame.setSize(700,700);
+        frame.setLocationRelativeTo(null);
         JComboBox sonuccomboBox=new JComboBox();
         DefaultComboBoxModel comboBoxModel=new DefaultComboBoxModel();
         comboBoxModel.setSelectedItem(sonuccomboBox);
