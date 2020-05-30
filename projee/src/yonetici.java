@@ -6,6 +6,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -26,6 +27,7 @@ public class yonetici extends JFrame {
     private JButton guncellebutton1;
     private JButton ExportforExcelbutton1;
     private JButton ExportforPdfbutton1;
+    private JButton devambutton1;
 
 
     public static Connection connect = null;
@@ -45,6 +47,21 @@ public class yonetici extends JFrame {
 
         JLabel label=new JLabel("yoneticiisim");
 
+        devambutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                musterii field=new musterii();
+                field.setVisible(true);
+                JFrame frame = new musterii("Gözetim Muayene Raporu");
+                frame.setSize(700,700);
+                frame.setVisible(true);
+
+
+                setVisible(false);
+
+
+            }
+        });
 
         okbutton1.addActionListener(new ActionListener() {
             @Override
@@ -196,12 +213,16 @@ public class yonetici extends JFrame {
 
 
 
-
-
-
-
     public static void main(String[] args) {
         JFrame frame = new yonetici("Yönetici giriş");
+       // frame.setPreferredSize(new Dimension(700, 700));
+        //frame.pack();
+        frame.setSize(700,700);
+       // frame.setLocationRelativeTo(null);
+        //frame.getContentPane().setSize(500,500);
+        //frame.pack();
+        //frame.setLocationRelativeTo(null);
+
         frame.setVisible(true);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
