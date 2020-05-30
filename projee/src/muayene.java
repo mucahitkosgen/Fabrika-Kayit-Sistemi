@@ -55,6 +55,7 @@ public class muayene extends JFrame{
     private JComboBox teklifnocomboBox1;
     private JButton ExportforExcelbutton1;
     private JButton ExportforPdfbutton1;
+    private JButton devambutton1;
 
 
     public static Connection connect=null;
@@ -367,10 +368,29 @@ public class muayene extends JFrame{
                 }
             }
         });
+        devambutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                ekipman_bilgileri field=new ekipman_bilgileri();
+                field.setVisible(true);
+                JFrame frame = new ekipman_bilgileri("Ekipman Bilgileri");
+                frame.setSize(700,700);
+                frame.setVisible(true);
+
+                setVisible(false);
+            }
+        });
 
 }
+
+    public muayene() {
+
+    }
+
     public static void main(String[] args) {
         JFrame frame=new muayene("Muayene");
+        frame.setSize(700,700);
+        frame.setLocationRelativeTo(null);
         JComboBox mustericomboBox=new JComboBox();
         DefaultComboBoxModel comboBoxModel=new DefaultComboBoxModel();
         comboBoxModel.setSelectedItem(mustericomboBox);
