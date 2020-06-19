@@ -6,7 +6,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -76,21 +75,101 @@ public class ekipman_bilgileri extends JFrame {
         ExportforExcelbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                AdvancedDb2ExcelExporter exporter=new AdvancedDb2ExcelExporter();
+                ExcelExport exporter=new ExcelExport();
                 exporter.export("ekipman_bilgileri");
             }
         });
         devambutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                muayenesonucları field=new muayenesonucları();
-                field.setVisible(true);
-                JFrame frame = new muayenesonucları("Muayene Sonuclari");
-                frame.setSize(700,700);
-                frame.setVisible(true);
+                String x = cihazcomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,x);
+                String y =tasiyiciortamcomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,y);
+                String z =muayenebolgesitextField1.getText();
+                String a=akimtipicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,a);
+                String b=yuzeytextField1.getText();
+                String c=kaldirmatestitarihitextField1.getText();
+                String d=kutupmesafesicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,d);
+                String p=miknatislamateknigicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,p);
+                String f=uvisiksiddeticomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,f);
+                String g=isikmesafesicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,g);
+                String h=isiksiddetitextField1.getText();
+                String ı=muayeneortamitextField1.getText();
+                String i=miknatisgiderimitextField1.getText();
+                String j=isilislemtextField1.getText();
+                String k=yuzeysicakligitextField1.getText();
+                String l=isikcihaztanimitextField1.getText();
+                String m=muayenebolgesialansiddetitextField1.getText();
 
-                setVisible(false);
-            }
+                if ("".equals(x)) {
+                    JOptionPane.showMessageDialog(null, "Cihaz alanı boş geçilemez");
+                    return;
+                } else if ("".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Taşıyıcı alan boş geçilemez");
+                    return;
+                } else if ("".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Muayene bölgesi boş geçilemez");
+                    return;
+                }
+                else if ("".equals(a)) {
+                    JOptionPane.showMessageDialog(null, "Akım tipi seçilmeden geçilemez");
+                    return;
+                }
+                else if ("".equals(b)) {
+                    JOptionPane.showMessageDialog(null, "Yüzey boş geçilemez");
+                    return;
+                }
+                else if ("".equals(c)) {
+                    JOptionPane.showMessageDialog(null, "Kaldırma testi tarihi boş geçilemez");
+                    return;
+                }
+                else if ("".equals(d)) {
+                    JOptionPane.showMessageDialog(null, "Kutup mesafesi boş geçilemez");
+                    return;
+                }
+                else if ("".equals(p)) {
+                    JOptionPane.showMessageDialog(null, "Mıknatıslama tekniği seçilmeden geçilemez");
+                    return;
+                }
+                else if ("".equals(f)) {
+                    JOptionPane.showMessageDialog(null, "uv ışık siddeti seçilmeden geçilemez");
+                    return;
+                }
+                else if ("".equals(g)) {
+                    JOptionPane.showMessageDialog(null, "Işık mesafesi seçilmeden geçilemez");
+                    return;
+                }
+                else if ("".equals(h)) {
+                    JOptionPane.showMessageDialog(null, "Işık şiddeti boş geçilemez");
+                    return;
+                }
+                else if ("".equals(k)) {
+                    JOptionPane.showMessageDialog(null, "Yüzey sıcaklığı boş geçilemez");
+                    return;
+                }
+                else if ("".equals(l)) {
+                    JOptionPane.showMessageDialog(null, "Işık cihaz tanımı boş geçilemez");
+                    return;
+                }
+                else if ("".equals(m)) {
+                    JOptionPane.showMessageDialog(null, "Muayene bölgesi alan şiddeti boş geçilemez");
+                    return;
+                }
+                else{
+                    muayenesonucları field=new muayenesonucları();
+                    field.setVisible(true);
+                    JFrame frame = new muayenesonucları("Muayene Sonuclari");
+                    frame.setSize(700,700);
+                    frame.setVisible(true);
+
+                    setVisible(false);
+            }}
         });//
         ExportforPdfbutton1.addActionListener(new ActionListener() {
             @Override
@@ -131,7 +210,7 @@ public class ekipman_bilgileri extends JFrame {
                     e.printStackTrace();
                 }
                 my_pdf_report.open();
-                PdfPTable my_report_table = new PdfPTable(17);
+                PdfPTable my_report_table = new PdfPTable(2);
                 PdfPCell table_cell;
                 while (true) {
                     try {
@@ -141,6 +220,7 @@ public class ekipman_bilgileri extends JFrame {
                     }
                     String cihaz = null;
                     try {
+                        my_report_table.addCell("CIHAZ");
                         cihaz = query_set.getString("cihaz");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -149,6 +229,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String tasiyiciortam= null;
                     try {
+                        my_report_table.addCell("TASIYICIORTAM");
                         tasiyiciortam = query_set.getString("tasiyiciortam");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -157,6 +238,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String muayenebolgesi= null;
                     try {
+                        my_report_table.addCell("MUAYENEBOLGESI");
                         muayenebolgesi = query_set.getString("muayenebolgesi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -165,6 +247,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String akimtipi = null;
                     try {
+                        my_report_table.addCell("AKIMTIPI");
                         akimtipi = query_set.getString("akimtipi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -173,6 +256,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String yuzey= null;
                     try {
+                        my_report_table.addCell("YUZEY");
                         yuzey = query_set.getString("yuzey");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -181,6 +265,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String kaldirmatestitarihi= null;
                     try {
+                        my_report_table.addCell("KALDIRMATESTITARIHI");
                         kaldirmatestitarihi = query_set.getString("kaldirmatestitarihi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -189,6 +274,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String kutupmesafesi = null;
                     try {
+                        my_report_table.addCell("KUTUPMESAFESI");
                         kutupmesafesi = query_set.getString("kutupmesafesi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -197,6 +283,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String miknatislamateknigi= null;
                     try {
+                        my_report_table.addCell("MIKNATISLAMATEKNIGI");
                         miknatislamateknigi = query_set.getString("miknatislamateknigi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -205,6 +292,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String uvisiksiddeti= null;
                     try {
+                        my_report_table.addCell("UVISIKSIDDETI");
                         uvisiksiddeti = query_set.getString("uvisiksiddeti");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -213,6 +301,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String isikmesafesi = null;
                     try {
+                        my_report_table.addCell("ISIKMESAFESI");
                         isikmesafesi = query_set.getString("isikmesafesi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -221,6 +310,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String isiksiddeti= null;
                     try {
+                        my_report_table.addCell("ISIKSIDDETI");
                         isiksiddeti = query_set.getString("isiksiddeti");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -229,6 +319,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String muayeneortami= null;
                     try {
+                        my_report_table.addCell("MUAYENEORTAMI");
                         muayeneortami = query_set.getString("muayeneortami");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -237,6 +328,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String miknatisgiderimi = null;
                     try {
+                        my_report_table.addCell("MIKNATISGIDERIMI");
                         miknatisgiderimi = query_set.getString("miknatisgiderimi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -245,6 +337,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String isilislem= null;
                     try {
+                        my_report_table.addCell("ISILISLEM");
                         isilislem = query_set.getString("isilislem");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -253,6 +346,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String yuzeysicakligi= null;
                     try {
+                        my_report_table.addCell("YUZEYSICAKLIGI");
                         yuzeysicakligi = query_set.getString("yuzeysicakligi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -261,6 +355,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String isikcihaztanimi = null;
                     try {
+                        my_report_table.addCell("ISIKCIHAZTANIMI");
                         isikcihaztanimi = query_set.getString("isikcihaztanimi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -269,6 +364,7 @@ public class ekipman_bilgileri extends JFrame {
                     my_report_table.addCell(table_cell);
                     String muayenebolgesialansiddeti= null;
                     try {
+                        my_report_table.addCell("MUAYENEBOLGESİALANSIDDETI");
                         muayenebolgesialansiddeti = query_set.getString("muayenebolgesialansiddeti");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -331,11 +427,67 @@ public class ekipman_bilgileri extends JFrame {
                 String l=isikcihaztanimitextField1.getText();
                 String m=muayenebolgesialansiddetitextField1.getText();
 
-                try {
-                    statement.executeUpdate("INSERT INTO ekipman_bilgileri VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+ b +"','"+ c +"','"+d+"','"+p+"','"+f+"','"+g+"','"+h+"','"+ı+"','"+i+"','"+j+"','"+k+"','"+l+"','"+m+"')");
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if ("".equals(x)) {
+                    JOptionPane.showMessageDialog(null, "Cihaz alanı boş geçilemez");
+                    return;
+                } else if ("".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Taşıyıcı alan boş geçilemez");
+                    return;
+                } else if ("".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Muayene bölgesi boş geçilemez");
+                    return;
                 }
+                else if ("".equals(a)) {
+                    JOptionPane.showMessageDialog(null, "Akım tipi seçilmeden geçilemez");
+                    return;
+                }
+                else if ("".equals(b)) {
+                    JOptionPane.showMessageDialog(null, "Yüzey boş geçilemez");
+                    return;
+                }
+                else if ("".equals(c)) {
+                    JOptionPane.showMessageDialog(null, "Kaldırma testi tarihi boş geçilemez");
+                    return;
+                }
+                else if ("".equals(d)) {
+                    JOptionPane.showMessageDialog(null, "Kutup mesafesi boş geçilemez");
+                    return;
+                }
+                else if ("".equals(p)) {
+                    JOptionPane.showMessageDialog(null, "Mıknatıslama tekniği seçilmeden geçilemez");
+                    return;
+                }
+                else if ("".equals(f)) {
+                    JOptionPane.showMessageDialog(null, "uv ışık siddeti seçilmeden geçilemez");
+                    return;
+                }
+                else if ("".equals(g)) {
+                    JOptionPane.showMessageDialog(null, "Işık mesafesi seçilmeden geçilemez");
+                    return;
+                }
+                else if ("".equals(h)) {
+                    JOptionPane.showMessageDialog(null, "Işık şiddeti boş geçilemez");
+                    return;
+                }
+                else if ("".equals(k)) {
+                    JOptionPane.showMessageDialog(null, "Yüzey sıcaklığı boş geçilemez");
+                    return;
+                }
+                else if ("".equals(l)) {
+                    JOptionPane.showMessageDialog(null, "Işık cihaz tanımı boş geçilemez");
+                    return;
+                }
+                else if ("".equals(m)) {
+                    JOptionPane.showMessageDialog(null, "Muayene bölgesi alan şiddeti boş geçilemez");
+                    return;
+                }
+
+                else{
+                    try {
+                        statement.executeUpdate("INSERT INTO ekipman_bilgileri VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+ b +"','"+ c +"','"+d+"','"+p+"','"+f+"','"+g+"','"+h+"','"+ı+"','"+i+"','"+j+"','"+k+"','"+l+"','"+m+"')");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }}
             }
 
         });
