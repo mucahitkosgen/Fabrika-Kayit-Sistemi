@@ -73,7 +73,7 @@ public class muayene extends JFrame{
                 ExcelExport exporter=new ExcelExport();
                 exporter.export("muayene");
             }
-        });
+        });//
         ExportforPdfbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
