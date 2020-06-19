@@ -6,7 +6,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -38,6 +37,7 @@ public class muayenesonucları extends JFrame{
     private JComboBox sonuccomboBox1;
     private JButton ExportforExcelbutton1;
     private JButton ExportforPdfbutton1;
+    private JButton ExportforAllExcelbutton1;
     private JButton devambutton1;
     private JTextField sonuctextField1;
 
@@ -54,8 +54,9 @@ public class muayenesonucları extends JFrame{
         ExportforExcelbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                AdvancedDb2ExcelExporter exporter = new AdvancedDb2ExcelExporter();
+                ExcelExport exporter = new ExcelExport();
                 exporter.export("muayenesonucları");
+
             }
         });
         ExportforPdfbutton1.addActionListener(new ActionListener() {
@@ -97,7 +98,7 @@ public class muayenesonucları extends JFrame{
                     e.printStackTrace();
                 }
                 my_pdf_report.open();
-                PdfPTable my_report_table = new PdfPTable(9);
+                PdfPTable my_report_table = new PdfPTable(2);
                 PdfPCell table_cell;
                 while (true) {
                     try {
@@ -107,6 +108,7 @@ public class muayenesonucları extends JFrame{
                     }
                     String serino = null;
                     try {
+                        my_report_table.addCell("SERINO");
                         serino = query_set.getString("serino");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -115,6 +117,7 @@ public class muayenesonucları extends JFrame{
                     my_report_table.addCell(table_cell);
                     String kaynakno = null;
                     try {
+                        my_report_table.addCell("KAYNAKNO");
                         kaynakno = query_set.getString("kaynakno");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -123,6 +126,7 @@ public class muayenesonucları extends JFrame{
                     my_report_table.addCell(table_cell);
                     String kontroluzunlugu = null;
                     try {
+                        my_report_table.addCell("KONTROLUZUNLUGU");
                         kontroluzunlugu = query_set.getString("kontroluzunlugu");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -131,6 +135,7 @@ public class muayenesonucları extends JFrame{
                     my_report_table.addCell(table_cell);
                     String kaynakyon = null;
                     try {
+                        my_report_table.addCell("KAYNAKYON");
                         kaynakyon = query_set.getString("kaynakyon");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -139,6 +144,7 @@ public class muayenesonucları extends JFrame{
                     my_report_table.addCell(table_cell);
                     String kalinlik = null;
                     try {
+                        my_report_table.addCell("KALINLIK");
                         kalinlik = query_set.getString("kalinlik");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -147,6 +153,7 @@ public class muayenesonucları extends JFrame{
                     my_report_table.addCell(table_cell);
                     String cap = null;
                     try {
+                        my_report_table.addCell("CAP");
                         cap = query_set.getString("cap");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -155,6 +162,7 @@ public class muayenesonucları extends JFrame{
                     my_report_table.addCell(table_cell);
                     String hatatipi = null;
                     try {
+                        my_report_table.addCell("HATATIPI");
                         hatatipi = query_set.getString("hatatipi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -163,6 +171,7 @@ public class muayenesonucları extends JFrame{
                     my_report_table.addCell(table_cell);
                     String hataninyeri = null;
                     try {
+                        my_report_table.addCell("HATANINYERI");
                         hataninyeri = query_set.getString("hataninyeri");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -171,6 +180,7 @@ public class muayenesonucları extends JFrame{
                     my_report_table.addCell(table_cell);
                     String sonuc = null;
                     try {
+                        my_report_table.addCell("SONUC");
                         sonuc = query_set.getString("sonuc");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -229,6 +239,14 @@ public class muayenesonucları extends JFrame{
 
             }
         });
+        ExportforAllExcelbutton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                ExcelExport exporter = new ExcelExport();
+                exporter.export("onay,musteri,operator,degerlendiren,muayene,ekipman_bilgileri,muayenesonucları");
+
+            }
+        });
 
 
         okbutton1.addActionListener(new ActionListener() {
@@ -245,11 +263,51 @@ public class muayenesonucları extends JFrame{
                 String g=sonuccomboBox1.getSelectedItem().toString();
                 JOptionPane.showMessageDialog(null,g);
 
-                try {
-                    statement.executeUpdate("INSERT INTO muayenesonucları VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+b+"','"+c+"','"+d+"','"+f+"','"+g+"')");
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if ("".equals(x)) {
+                    JOptionPane.showMessageDialog(null, "Seri no boş geçilemez");
+                    return;
+                } else if ("".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Kaynak no boş geçemezsiniz");
+                    return;
+                } else if ("".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Kontrol uzunluğu boş geçemezsiniz");
+                    return;
                 }
+                else if("".equals(a)){
+                    JOptionPane.showMessageDialog(null, "Kaynak yon boş geçemezsin");
+                    return;
+                }
+                else if("".equals(b)){
+                    JOptionPane.showMessageDialog(null, "Kalınlık boş geçemezsiniz");
+                    return;
+                }
+                else if (g.equalsIgnoreCase("RED")){
+                     if("".equals(d)  ){
+                         JOptionPane.showMessageDialog(null, "Sonuç RED ise hata tipini boş geçemezsin");
+
+                        return;
+                     }
+                     else if( "".equals(f)){
+                         JOptionPane.showMessageDialog(null, "Sonuç RED ise hata yerini boş geçemezsin");
+                         return;
+                     }
+
+                     else{
+                         try {
+                             statement.executeUpdate("INSERT INTO muayenesonucları VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+b+"','"+c+"','"+d+"','"+f+"','"+g+"')");
+                         }    catch (SQLException e) {
+                             e.printStackTrace();
+                         }
+
+                     }
+
+                }
+                else{
+                    try {
+                        statement.executeUpdate("INSERT INTO muayenesonucları VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+b+"','"+c+"','"+d+"','"+f+"','"+g+"')");
+                    }    catch (SQLException e) {
+                        e.printStackTrace();
+                    }}
             }
         });
         guncellebutton1.addActionListener(new ActionListener() {
