@@ -6,15 +6,14 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.*;
 
-public class musterii extends JFrame {
-    private JPanel musterii;
+public class musteri extends JFrame{
+    private JPanel musteri;
     private JLabel adisoyadiLabel;
     private JTextField adisoyaditextField1;
     private JLabel seviyeLabel;
@@ -33,29 +32,56 @@ public class musterii extends JFrame {
     public static ResultSet resultSet=null;
     public static String url="jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
     public  static String user="root",pass="Kule1845";
-    public musterii(String title) {
+    public musteri(String title) {
         super(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(musterii);
+        this.setContentPane(musteri);
         devambutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                muayene fieldd=new muayene();
-                fieldd.setVisible(true);
-                JFrame frame = new muayene("Muayene");
-                frame.setSize(700,700);
+                String x = adisoyaditextField1.getText();
+                String y = seviyetextField1.getText();
+                String z = tarihtextField1.getText();
 
-                frame.setVisible(true);
+                if ("".equals(x) && "".equals(y) && "".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Adı-soyadı,seviye ve tarihi boş geçemezsiniz");
+                    return;
+                } else if ("".equals(x) && "".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Adı-soyadı ve tarihi boş geçemezsiniz.");
+                    return;
+                } else if ("".equals(x) && "".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Adı-soyadı ve tarihi boş geçemezsiniz");
+                    return;
+                } else if ("".equals(y) && "".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Seviye ve tarihi boş geçemezsiniz");
+                    return;
+                } else if ("".equals(x)) {
+                    JOptionPane.showMessageDialog(null, "Adı-soyadı boş geçemezsiniz");
+                    return;
+                } else if ("".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Seviyeyi boş geçemezsiniz");
+                    return;
+                } else if ("".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Tarihi boş geçemezsiniz");
+                    return;
+                }
+                else{
+                    muayene fieldd=new muayene();
+                    fieldd.setVisible(true);
+                    JFrame frame = new muayene("Muayene");
+                    frame.setSize(700,700);
 
-                setVisible(false);
-            }
+                    frame.setVisible(true);
+
+                    setVisible(false);
+                }}
         });
 
         ExportforExcelbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                AdvancedDb2ExcelExporter exporter = new AdvancedDb2ExcelExporter();
-                exporter.export("musterii");
+                ExcelExport exporter = new ExcelExport();
+                exporter.export("musteri");
 
 
             }
@@ -64,43 +90,45 @@ public class musterii extends JFrame {
         ExportforPdfbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String url = "jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
-                String user = "root";
-                String pass = "Kule1845";
                 try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Class.forName ("com.mysql.cj.jdbc.Driver");
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                Connection conn = null;
+                Connection connect = null;
                 try {
-                    conn = DriverManager.getConnection(url, user, pass);
+                    connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey", "root", "Kule1845");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 Statement stmt = null;
                 try {
-                    stmt = conn.createStatement();
+                    stmt = connect.createStatement();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
                 ResultSet query_set = null;
                 try {
-                    query_set = stmt.executeQuery("SELECT * FROM musterii ");
+                    query_set = stmt.executeQuery("SELECT adisoyadi,seviye,tarih FROM musteri");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
                 Document my_pdf_report = new Document();
                 try {
-                    PdfWriter.getInstance(my_pdf_report, new FileOutputStream("musterii.pdf"));
+                    PdfWriter.getInstance(my_pdf_report, new FileOutputStream("musteri.pdf"));
                 } catch (DocumentException e) {
                     e.printStackTrace();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 my_pdf_report.open();
+
                 PdfPTable my_report_table = new PdfPTable(3);
+
                 PdfPCell table_cell;
+
                 while (true) {
                     try {
                         if (!query_set.next()) break;
@@ -109,53 +137,56 @@ public class musterii extends JFrame {
                     }
                     String adisoyadi = null;
                     try {
-                        adisoyadi = query_set.getString("adisoyadi");
+                        adisoyadi = query_set.getString("ADISOYADI");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell = new PdfPCell(new Phrase(adisoyadi));
+                    table_cell=new PdfPCell(new Phrase(adisoyadi));
                     my_report_table.addCell(table_cell);
-                    String seviye = null;
+                    String seviye= null;
                     try {
-                        seviye = query_set.getString("seviye");
+                        seviye = query_set.getString("SEVİYE");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell = new PdfPCell(new Phrase(seviye));
+                    table_cell=new PdfPCell(new Phrase(seviye));
                     my_report_table.addCell(table_cell);
-                    String tarih = null;
+                    String tarih= null;
                     try {
-                        tarih = query_set.getString("tarih");
+                        tarih = query_set.getString("TARİH");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    table_cell = new PdfPCell(new Phrase(tarih));
-                    my_report_table.addCell(table_cell);}
-                    try {
-                        my_pdf_report.add(my_report_table);
-                    } catch (DocumentException e) {
-                        e.printStackTrace();
-                    }
-                    my_pdf_report.close();
-                    try {
-                        query_set.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        stmt.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+                    table_cell=new PdfPCell(new Phrase(tarih));
+                    my_report_table.addCell(table_cell);
+
+                }
+
+                try {
+                    my_pdf_report.add(my_report_table);
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
+                my_pdf_report.close();
+
+
+                try {
+                    query_set.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    connect.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
-
-        );
+        });
         silbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -165,7 +196,7 @@ public class musterii extends JFrame {
                 String z = tarihtextField1.getText();
                 try {
 
-                    statement.executeUpdate("DELETE FROM musterii where adisoyadi='" + x + "'");
+                    statement.executeUpdate("DELETE FROM musteri where adisoyadi='" + x + "'");
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -180,12 +211,37 @@ public class musterii extends JFrame {
                 String y = seviyetextField1.getText();
                 String z = tarihtextField1.getText();
 
-                try {
-                    statement.executeUpdate("INSERT INTO musterii VALUES ('" + x + "','" + y + "','" + z + "')");
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if ("".equals(x) && "".equals(y) && "".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Adı-soyadı,seviye ve tarihi boş geçemezsiniz");
+                    return;
+                } else if ("".equals(x) && "".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Adı-soyadı ve tarihi boş geçemezsiniz.");
+                    return;
+                } else if ("".equals(x) && "".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Adı-soyadı ve tarihi boş geçemezsiniz");
+                    return;
+                } else if ("".equals(y) && "".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Seviye ve tarihi boş geçemezsiniz");
+                    return;
+                } else if ("".equals(x)) {
+                    JOptionPane.showMessageDialog(null, "Adı-soyadı boş geçemezsiniz");
+                    return;
+                } else if ("".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Seviyeyi boş geçemezsiniz");
+                    return;
+                } else if ("".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Tarihi boş geçemezsiniz");
+                    return;
+                }
+                else {
+                    try {
+                        statement.executeUpdate("INSERT INTO musteri VALUES ('" + x + "','" + y + "','" + z + "')");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+
 
         });
         guncellebutton1.addActionListener(new ActionListener() {
@@ -196,7 +252,7 @@ public class musterii extends JFrame {
                 String z = tarihtextField1.getText();
 
                 try {
-                    statement.executeUpdate("UPDATE musterii set seviye='" + y + "',tarih='" + z + "'where adisoyadi='" + x + "'");
+                    statement.executeUpdate("UPDATE musteri set seviye='" + y + "',tarih='" + z + "'where adisoyadi='" + x + "'");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -204,19 +260,15 @@ public class musterii extends JFrame {
         });
     }
 
-    public musterii(){
+    public musteri(){
 
     }
-
-
     public static void main(String[] args) {
-        JFrame frame = new musterii("Gözetim Muayene Raporu");
-       // frame.setPreferredSize(new Dimension(700, 700));
+        JFrame frame = new musteri("MUSTERİ");
+        // frame.setPreferredSize(new Dimension(700, 700));
         //frame.pack();
         frame.setSize(700,700);
-       // frame.getContentPane().setSize(500,500);
-        //frame.pack();
-        //frame.setLocationRelativeTo(null);
+
 
         frame.setVisible(true);
         try {
@@ -224,7 +276,7 @@ public class musterii extends JFrame {
             //connect = DriverManager.getConnection(url, user, pass);
             Connection connect = database.getConnection();
             statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from musterii");
+            ResultSet resultSet = statement.executeQuery("select * from musteri");
             while (resultSet.next()) {
                 String adisoyadi = resultSet.getString(1);//personal bilgileri.
                 String seviye = resultSet.getString(2);
@@ -240,5 +292,9 @@ public class musterii extends JFrame {
 
 
     }}
+
+
+
+
 
 
