@@ -130,7 +130,7 @@ public class musteri extends JFrame{
                 PdfPCell table_cell;
 
                 while (true) {
-                    try {
+                    try {//
                         if (!query_set.next()) break;
                     } catch (SQLException e) {
                         e.printStackTrace();
