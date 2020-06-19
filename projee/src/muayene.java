@@ -6,7 +6,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -71,7 +70,7 @@ public class muayene extends JFrame{
         ExportforExcelbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                AdvancedDb2ExcelExporter exporter=new AdvancedDb2ExcelExporter();
+                ExcelExport exporter=new ExcelExport();
                 exporter.export("muayene");
             }
         });
@@ -114,7 +113,7 @@ public class muayene extends JFrame{
                     e.printStackTrace();
                 }
                 my_pdf_report.open();
-                PdfPTable my_report_table = new PdfPTable(15);
+                PdfPTable my_report_table = new PdfPTable(2);
                 PdfPCell table_cell;
                 while (true) {
                     try {
@@ -124,6 +123,7 @@ public class muayene extends JFrame{
                     }
                     String musteri = null;
                     try {
+                        my_report_table.addCell("MUSTERI");
                         musteri = query_set.getString("musteri");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -132,6 +132,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String projeadi= null;
                     try {
+                        my_report_table.addCell("PROJEADI");
                         projeadi = query_set.getString("projeadi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -140,6 +141,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String testyeri= null;
                     try {
+                        my_report_table.addCell("TESTYERI");
                         testyeri = query_set.getString("testyeri");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -148,6 +150,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String muayenestandardi = null;
                     try {
+                        my_report_table.addCell("MUAYENESTANDARDI");
                         muayenestandardi = query_set.getString("muayenestandardi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -156,6 +159,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String degerlendirmestandardi= null;
                     try {
+                        my_report_table.addCell("DEGERLENDIRMESTANDARDI");
                         degerlendirmestandardi = query_set.getString("degerlendirmestandardi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -164,6 +168,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String muayeneproseduru= null;
                     try {
+                        my_report_table.addCell("MUAYENEPROSEDURU");
                         muayeneproseduru = query_set.getString("muayeneproseduru");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -172,6 +177,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String muayenekapsami = null;
                     try {
+                        my_report_table.addCell("MUAYENEKAPSAMI");
                         muayenekapsami = query_set.getString("muayenekapsami");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -180,6 +186,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String resimno= null;
                     try {
+                        my_report_table.addCell("RESIMNO");
                         resimno = query_set.getString("resimno");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -188,6 +195,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String yuzeydurumu= null;
                     try {
+                        my_report_table.addCell("YUZEYDURUMU");
                         yuzeydurumu = query_set.getString("yuzeydurumu");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -196,6 +204,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String muayeneasamasi = null;
                     try {
+                        my_report_table.addCell("MUAYENEASAMASI");
                         muayeneasamasi = query_set.getString("muayeneasamasi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -204,6 +213,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String sayfano= null;
                     try {
+                        my_report_table.addCell("SAYFANO");
                         sayfano = query_set.getString("sayfano");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -212,6 +222,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String raporno= null;
                     try {
+                        my_report_table.addCell("RAPORNO");
                         raporno = query_set.getString("raporno");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -220,6 +231,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String raportarihi = null;
                     try {
+                        my_report_table.addCell("RAPORTARIHI");
                         raportarihi = query_set.getString("raportarihi");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -228,6 +240,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String isemrino= null;
                     try {
+                        my_report_table.addCell("ISEMRINO");
                         isemrino = query_set.getString("isemrino");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -236,6 +249,7 @@ public class muayene extends JFrame{
                     my_report_table.addCell(table_cell);
                     String teklifno= null;
                     try {
+                        my_report_table.addCell("TEKLIFNO");
                         teklifno = query_set.getString("teklifno");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -330,12 +344,74 @@ public class muayene extends JFrame{
                 JOptionPane.showMessageDialog(null,k);
                 String l=teklifnocomboBox1.getSelectedItem().toString();
                 JOptionPane.showMessageDialog(null,l);
-
-                try {
-                    statement.executeUpdate("INSERT INTO muayene VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+ b +"','"+ c +"','"+d+"','"+f+"','"+g+"','"+h+"','"+ı+"','"+i+"','"+j+"','"+k+"','"+l+"')");
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                 if ("".equals(x)) {
+                    JOptionPane.showMessageDialog(null, "Müşteri alanını seçmeden geçemezsin");
+                    return;
+                } else if ("".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Proje adını boş geçemezsiniz");
+                    return;
+                } else if ("".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Test yerini boş geçemezsiniz");
+                    return;
                 }
+                 else if("".equals(a)){
+                     JOptionPane.showMessageDialog(null, "Muayene standardini boş bırakamazsınız");
+                     return;
+                 }
+                 else if("".equals(b)){
+                     JOptionPane.showMessageDialog(null, "Değerlendirme standardini boş geçemezsiniz");
+                     return;
+                 }
+                 else if("".equals(c)){
+                     JOptionPane.showMessageDialog(null, "Muayene prosedurunu boş geçemezsiniz");
+                     return;
+                 }
+                 else if("".equals(d)){
+                     JOptionPane.showMessageDialog(null, "Muayene kapsamını boş geçemezsiniz");
+                     return;
+                 }
+                 else if("".equals(f)){
+                     JOptionPane.showMessageDialog(null, "Resim no boş geçemezsin");
+                     return;
+                 }
+                 else if("".equals(g)){
+                     JOptionPane.showMessageDialog(null, "Yüzey durumunu seçmeden geçemezsin");
+                     return;
+                 }
+                 else if("".equals(h)){
+                     JOptionPane.showMessageDialog(null, "Muayene aşamasını seçmeden geçemezsin");
+                     return;
+                 }
+                 else if("".equals(ı)){
+                     JOptionPane.showMessageDialog(null, "Sayfa no boş geçemezsin");
+                     return;
+                 }
+                 else if("".equals(i)){
+                     JOptionPane.showMessageDialog(null, "Rapor no boş geçemezsin");
+                     return;
+                 }
+                 else if("".equals(j)){
+                     JOptionPane.showMessageDialog(null, "Rapor tarihi boş geçemezsiniz");
+                     return;
+                 }
+                 else if("".equals(k)){
+                     JOptionPane.showMessageDialog(null, "İş emrino seçmeden geçemezsin");
+                     return;
+                 }
+                 else if("".equals(l)){
+                     JOptionPane.showMessageDialog(null, "Teklif no seçmeden geçemezsin");
+                     return;
+                 }
+                 else if(j.equalsIgnoreCase("21.06.2020")){
+                    try {
+                     statement.executeUpdate("INSERT INTO muayene VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+ b +"','"+ c +"','"+d+"','"+f+"','"+g+"','"+h+"','"+ı+"','"+i+"','"+j+"','"+k+"','"+l+"')");
+                 } catch (SQLException e) {
+                        e.printStackTrace();
+                 }
+                 }
+                 else{
+                     JOptionPane.showMessageDialog(null, "Rapor tarihi değiştirilemez");
+                 }
             }
         });
         guncellebutton1.addActionListener(new ActionListener() {
@@ -371,14 +447,93 @@ public class muayene extends JFrame{
         devambutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                ekipman_bilgileri field=new ekipman_bilgileri();
-                field.setVisible(true);
-                JFrame frame = new ekipman_bilgileri("Ekipman Bilgileri");
-                frame.setSize(700,700);
-                frame.setVisible(true);
+                String x = mustericomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,x);
+                String y = projeaditextField1.getText();
+                String z = testyeritextField1.getText();
+                String a= muayenestandarditextField1.getText();
+                String b= degerlendirmestandarditextField1.getText();
+                String c= muayeneprosedurutextField1.getText();
+                String d=muayenekapsamitextField1.getText();
+                String f=resimnotextField1.getText();
+                String g=yuzeydurumucomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,g);
+                String h=muayeneasamasicomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,h);
+                String ı=sayfanotextField1.getText();
+                String i=rapornotextField1.getText();
+                String j=raportarihitextField1.getText();
+                String k=isemrinocomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,k);
+                String l=teklifnocomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null,l);
+                if ("".equals(x)) {
+                    JOptionPane.showMessageDialog(null, "Müşteri alanını seçmeden geçemezsin");
+                    return;
+                } else if ("".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Proje adını boş geçemezsiniz");
+                    return;
+                } else if ("".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Test yerini boş geçemezsiniz");
+                    return;
+                }
+                else if("".equals(a)){
+                    JOptionPane.showMessageDialog(null, "Muayene standardini boş bırakamazsınız");
+                    return;
+                }
+                else if("".equals(b)){
+                    JOptionPane.showMessageDialog(null, "Değerlendirme standardini boş geçemezsiniz");
+                    return;
+                }
+                else if("".equals(c)){
+                    JOptionPane.showMessageDialog(null, "Muayene prosedurunu boş geçemezsiniz");
+                    return;
+                }
+                else if("".equals(d)){
+                    JOptionPane.showMessageDialog(null, "Muayene kapsamını boş geçemezsiniz");
+                    return;
+                }
+                else if("".equals(f)){
+                    JOptionPane.showMessageDialog(null, "Resim no boş geçemezsin");
+                    return;
+                }
+                else if("".equals(g)){
+                    JOptionPane.showMessageDialog(null, "Yüzey durumunu seçmeden geçemezsin");
+                    return;
+                }
+                else if("".equals(h)){
+                    JOptionPane.showMessageDialog(null, "Muayene aşamasını seçmeden geçemezsin");
+                    return;
+                }
+                else if("".equals(ı)){
+                    JOptionPane.showMessageDialog(null, "Sayfa no boş geçemezsin");
+                    return;
+                }
+                else if("".equals(i)){
+                    JOptionPane.showMessageDialog(null, "Rapor no boş geçemezsin");
+                    return;
+                }
+                else if("".equals(j)){
+                    JOptionPane.showMessageDialog(null, "Rapor tarihi boş geçemezsiniz");
+                    return;
+                }
+                else if("".equals(k)){
+                    JOptionPane.showMessageDialog(null, "İş emrino seçmeden geçemezsin");
+                    return;
+                }
+                else if("".equals(l)){
+                    JOptionPane.showMessageDialog(null, "Teklif no seçmeden geçemezsin");
+                    return;
+                }
+                else if(j.equalsIgnoreCase("21.06.2020")){
+                    ekipman_bilgileri field=new ekipman_bilgileri();
+                    field.setVisible(true);
+                    JFrame frame = new ekipman_bilgileri("Ekipman Bilgileri");
+                    frame.setSize(700,700);
+                    frame.setVisible(true);
 
-                setVisible(false);
-            }
+                    setVisible(false);
+            }}
         });
 
 }
