@@ -125,7 +125,7 @@ public class musteri extends JFrame{
                 }
                 my_pdf_report.open();
 
-                PdfPTable my_report_table = new PdfPTable(3);
+                PdfPTable my_report_table = new PdfPTable(2);
 
                 PdfPCell table_cell;
 
@@ -137,6 +137,7 @@ public class musteri extends JFrame{
                     }
                     String adisoyadi = null;
                     try {
+                        my_report_table.addCell("ADISOYADI");
                         adisoyadi = query_set.getString("ADISOYADI");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -145,6 +146,7 @@ public class musteri extends JFrame{
                     my_report_table.addCell(table_cell);
                     String seviye= null;
                     try {
+                        my_report_table.addCell("SEVIYE");
                         seviye = query_set.getString("SEVİYE");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -153,6 +155,7 @@ public class musteri extends JFrame{
                     my_report_table.addCell(table_cell);
                     String tarih= null;
                     try {
+                        my_report_table.addCell("TARIH");
                         tarih = query_set.getString("TARİH");
                     } catch (SQLException e) {
                         e.printStackTrace();
