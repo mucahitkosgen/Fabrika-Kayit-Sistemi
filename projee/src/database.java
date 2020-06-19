@@ -7,7 +7,7 @@ public class database {
     public static String url = "jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
     public static String user = "root", pass = "Kule1845";
 
-//
+///
     public static Connection getConnection(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
