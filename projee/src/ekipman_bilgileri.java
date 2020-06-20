@@ -61,6 +61,12 @@ public class ekipman_bilgileri extends JFrame {
     private JButton ExportforExcelbutton1;
     private JButton ExportforPdfbutton1;
     private JButton devambutton1;
+    private JLabel standartsapmalarLabel;
+    private JTextField standartsapmalartextField1;
+    private JLabel muayenetarihleriLabel;
+    private JTextField muayenetarihleritextField1;
+    private JLabel aciklamalarLabel;
+    private JTextField aciklamalartextField1;
 
 
     public static Connection connect=null;
@@ -106,6 +112,9 @@ public class ekipman_bilgileri extends JFrame {
                 String k=yuzeysicakligitextField1.getText();
                 String l=isikcihaztanimitextField1.getText();
                 String m=muayenebolgesialansiddetitextField1.getText();
+                String n= standartsapmalartextField1.getText();
+                String o=muayenetarihleritextField1.getText();
+                String r=aciklamalartextField1.getText();
 
                 if ("".equals(x)) {
                     JOptionPane.showMessageDialog(null, "Cihaz alanı boş geçilemez");
@@ -161,6 +170,15 @@ public class ekipman_bilgileri extends JFrame {
                     JOptionPane.showMessageDialog(null, "Muayene bölgesi alan şiddeti boş geçilemez");
                     return;
                 }
+                else if("".equals(n)){
+                    JOptionPane.showMessageDialog(null, "Standartsapma alanı şiddeti boş geçilemez");
+                    return;
+                }
+                else if("".equals(o)){
+                    JOptionPane.showMessageDialog(null, "Muayene tarihleri alan şiddeti boş geçilemez");
+                    return;
+                }
+
                 else{
                     muayenesonucları field=new muayenesonucları();
                     field.setVisible(true);
@@ -371,6 +389,34 @@ public class ekipman_bilgileri extends JFrame {
                     }
                     table_cell=new PdfPCell(new Phrase(muayenebolgesialansiddeti));
                     my_report_table.addCell(table_cell);
+                    String standartsapmalar= null;
+                    try {
+                        my_report_table.addCell("STANDARTSAPMA");
+                        standartsapmalar = query_set.getString("standartsapmalar");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(standartsapmalar));
+                    my_report_table.addCell(table_cell);
+                    String muayenetarihleri= null;
+                    try {
+                        my_report_table.addCell("MUAYENETARIHLERI");
+                        muayenetarihleri = query_set.getString("muayenetarihleri");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(muayenetarihleri));
+                    my_report_table.addCell(table_cell);
+                    String aciklamalar= null;
+                    try {
+                        my_report_table.addCell("ACIKLAMALAR");
+                        aciklamalar = query_set.getString("aciklamalar");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    table_cell=new PdfPCell(new Phrase(muayenetarihleri));
+                    my_report_table.addCell(table_cell);
+
 
 
                 }
@@ -426,6 +472,9 @@ public class ekipman_bilgileri extends JFrame {
                 String k=yuzeysicakligitextField1.getText();
                 String l=isikcihaztanimitextField1.getText();
                 String m=muayenebolgesialansiddetitextField1.getText();
+                String n= standartsapmalartextField1.getText();
+                String o=muayenetarihleritextField1.getText();
+                String r=aciklamalartextField1.getText();
 
                 if ("".equals(x)) {
                     JOptionPane.showMessageDialog(null, "Cihaz alanı boş geçilemez");
@@ -481,10 +530,18 @@ public class ekipman_bilgileri extends JFrame {
                     JOptionPane.showMessageDialog(null, "Muayene bölgesi alan şiddeti boş geçilemez");
                     return;
                 }
+                else if("".equals(n)){
+                    JOptionPane.showMessageDialog(null, "Standartsapma alanı şiddeti boş geçilemez");
+                    return;
+                }
+                else if("".equals(o)){
+                    JOptionPane.showMessageDialog(null, "Muayene tarihleri alan şiddeti boş geçilemez");
+                    return;
+                }
 
                 else{
                     try {
-                        statement.executeUpdate("INSERT INTO ekipman_bilgileri VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+ b +"','"+ c +"','"+d+"','"+p+"','"+f+"','"+g+"','"+h+"','"+ı+"','"+i+"','"+j+"','"+k+"','"+l+"','"+m+"')");
+                        statement.executeUpdate("INSERT INTO ekipman_bilgileri VALUES ('" + x + "','" + y + "','" + z + "','"+ a +"','"+ b +"','"+ c +"','"+d+"','"+p+"','"+f+"','"+g+"','"+h+"','"+ı+"','"+i+"','"+j+"','"+k+"','"+l+"','"+m+"','"+n+"','"+o+"','"+r+"')");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }}
@@ -518,6 +575,10 @@ public class ekipman_bilgileri extends JFrame {
                 String k=yuzeysicakligitextField1.getText();
                 String l=isikcihaztanimitextField1.getText();
                 String m=muayenebolgesialansiddetitextField1.getText();
+                String n= standartsapmalartextField1.getText();
+                String o=muayenetarihleritextField1.getText();
+                String r=aciklamalartextField1.getText();
+
 
 
                 try {
@@ -557,8 +618,11 @@ public class ekipman_bilgileri extends JFrame {
                 String k=yuzeysicakligitextField1.getText();
                 String l=isikcihaztanimitextField1.getText();
                 String m=muayenebolgesialansiddetitextField1.getText();
+                String n= standartsapmalartextField1.getText();
+                String o=muayenetarihleritextField1.getText();
+                String r=aciklamalartextField1.getText();
                 try{
-                    statement.executeUpdate("UPDATE ekipman_bilgileri set tasiyiciortam='"+y+"', muayenebolgesi='"+z+"',akimtipi='"+a+"',yuzey='"+b+"',kaldirmatestitarihi='"+c+"',kutupmesafesi='"+d+"',miknatislamateknigi='"+p+"',uvisiksiddeti='"+f+"',isikmesafesi='"+g+"',isiksiddeti='"+h+"',muayeneortami='"+ı+"',miknatisgiderimi='"+i+"',isilislem='"+j+"',yuzeysicakligi='"+k+"',isikcihaztanimi='"+l+"',muayenebolgesialansiddeti='"+m+"' where cihaz='"+x+"'");
+                    statement.executeUpdate("UPDATE ekipman_bilgileri set tasiyiciortam='"+y+"', muayenebolgesi='"+z+"',akimtipi='"+a+"',yuzey='"+b+"',kaldirmatestitarihi='"+c+"',kutupmesafesi='"+d+"',miknatislamateknigi='"+p+"',uvisiksiddeti='"+f+"',isikmesafesi='"+g+"',isiksiddeti='"+h+"',muayeneortami='"+ı+"',miknatisgiderimi='"+i+"',isilislem='"+j+"',yuzeysicakligi='"+k+"',isikcihaztanimi='"+l+"',muayenebolgesialansiddeti='"+m+"',standartsapmalar='"+n+"',muayenetarihleri='"+o+"',aciklamalar='"+r+"' where cihaz='"+x+"'");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -617,7 +681,10 @@ public class ekipman_bilgileri extends JFrame {
                 String yuzeysicakligi=resultSet.getString(15);
                 String isikcihaztanimi=resultSet.getString(16);
                 String muayenebolgesialansiddeti=resultSet.getString(17);
-                System.out.println(cihaz + " " + tasiyiciortam + " " +muayenebolgesi+" "+ akimtipi+" "+yuzey+" "+kaldirmatestitarihi+" "+kutupmesafesi+" "+miknatislamateknigi+" "+uvisiksiddeti+" "+isikmesafesi+" "+isiksiddeti+" "+muayeneortami+" "+miknatisgiderimi+" "+isilislem+" "+yuzeysicakligi+" "+isikcihaztanimi);
+                String standartsapmalar=resultSet.getString(18);
+                String muayenetarihleri=resultSet.getString(19);
+                String aciklamalar=resultSet.getString(20);
+                System.out.println(cihaz + " " + tasiyiciortam + " " +muayenebolgesi+" "+ akimtipi+" "+yuzey+" "+kaldirmatestitarihi+" "+kutupmesafesi+" "+miknatislamateknigi+" "+uvisiksiddeti+" "+isikmesafesi+" "+isiksiddeti+" "+muayeneortami+" "+miknatisgiderimi+" "+isilislem+" "+yuzeysicakligi+"  "+isikcihaztanimi+" "+muayenebolgesialansiddeti+"+"+standartsapmalar+"+"+muayenetarihleri+""+aciklamalar);
             }
         } catch (SQLException e) {
             e.printStackTrace();
