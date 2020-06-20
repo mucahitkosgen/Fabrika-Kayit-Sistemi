@@ -65,6 +65,12 @@ public class muayene extends JFrame{
 
     public muayene(String title){
         super(title);
+        connect = database.getConnection();
+        try {
+            statement = connect.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(muayene);
         ExportforExcelbutton1.addActionListener(new ActionListener() {
