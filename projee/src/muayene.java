@@ -548,60 +548,7 @@ public class muayene extends JFrame{
 
     }
 
-    public static void main(String[] args) {
-        JFrame frame=new muayene("Muayene");
-        frame.setSize(700,700);
-        frame.setLocationRelativeTo(null);
-        JComboBox mustericomboBox=new JComboBox();
-        DefaultComboBoxModel comboBoxModel=new DefaultComboBoxModel();
-        comboBoxModel.setSelectedItem(mustericomboBox);
-        JComboBox yuzeydurumucomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(yuzeydurumucomboBox);
-        JComboBox muayeneasamasicomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(muayeneasamasicomboBox);
-        JComboBox isemrinocomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(isemrinocomboBox);
-        JComboBox teklifnocomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(teklifnocomboBox);
 
-
-
-        frame.setVisible(true);
-
-
-
-        try{
-           // Class.forName("com.mysql.cj.jdbc.Driver");
-            //connect = DriverManager.getConnection(url, user, pass);
-            Connection connect=database.getConnection();
-            statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from muayene");
-            while (resultSet.next()) {
-                String musteri = resultSet.getString(1);
-                String projeadi = resultSet.getString(2);
-                String testyeri = resultSet.getString(3);
-                String muayenestandardi=resultSet.getString(4);
-                String degerlendirmestandardi=resultSet.getString(5);
-                String muayeneproseduru=resultSet.getString(6);
-                String muayenekapsami=resultSet.getString(7);
-                String resimno=resultSet.getString(8);
-                String yuzeydurumu=resultSet.getString(9);
-                String muayeneasamasi=resultSet.getString(10);
-                String sayfano=resultSet.getString(11);
-                String raporno=resultSet.getString(12);
-                String raportarihi=resultSet.getString(13);
-                String isemrino=resultSet.getString(14);
-                String teklifno=resultSet.getString(15);
-                System.out.println(musteri + " " +projeadi  + " " +testyeri+" "+muayenestandardi+" "+degerlendirmestandardi+" "+muayeneproseduru+" "+muayenekapsami+" "+resimno+" "+yuzeydurumu+" "+muayeneasamasi+" "+sayfano+" "+raporno+" "+raportarihi+" "+isemrino+" "+teklifno);
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }//catch (ClassNotFoundException e){
-           // e.printStackTrace();
-        //}
-
-
-    }
 
 
 
