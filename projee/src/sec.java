@@ -9,6 +9,8 @@ public class sec extends JFrame{
     private JButton devambutton1;
     private JButton okbutton1;
 
+
+
     public sec(String title) {
         super(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +30,7 @@ public class sec extends JFrame{
                     return;
                 }
                 else if("OPERATOR".equals(a)) {
+
                     operator field = new operator();
                     field.setVisible(true);
                     JFrame frame = new operator("OPERATOR");
