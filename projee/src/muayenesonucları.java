@@ -345,39 +345,6 @@ public class muayenesonucları extends JFrame{
 
     }
 
-    public static void main(String[] args) {
-        JFrame frame=new muayenesonucları("Muayene Sonuçları");
-        frame.setSize(700,700);
-        frame.setLocationRelativeTo(null);
-        JComboBox sonuccomboBox=new JComboBox();
-        DefaultComboBoxModel comboBoxModel=new DefaultComboBoxModel();
-        comboBoxModel.setSelectedItem(sonuccomboBox);
-        frame.setVisible(true);
-        try{
-           // Class.forName("com.mysql.cj.jdbc.Driver");
-            //connect = DriverManager.getConnection(url, user, pass);
-            Connection connect=database.getConnection();
-            statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from muayenesonucları");
-            while (resultSet.next()) {
-                String serino = resultSet.getString(1);
-                String kaynakno = resultSet.getString(2);
-                String kontroluzunlugu = resultSet.getString(3);
-                String kalinlik=resultSet.getString(4);
-                String cap=resultSet.getString(5);
-                String hatatipi=resultSet.getString(6);
-                String hataninyeri=resultSet.getString(7);
-                String sonuc=resultSet.getString(8);
-                System.out.println(serino + " " +kaynakno  + " "+kontroluzunlugu+" "+kalinlik+" "+cap+" "+hatatipi+" "+hataninyeri+" "+sonuc);
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }//catch (ClassNotFoundException e){
-           // e.printStackTrace();
-        //}
-
-
-    }
 
 
 
