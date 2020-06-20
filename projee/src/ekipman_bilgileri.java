@@ -76,6 +76,12 @@ public class ekipman_bilgileri extends JFrame {
     public  static String user="root",pass="Kule1845";
     public ekipman_bilgileri(String title){
         super(title);
+        connect = database.getConnection();
+        try {
+            statement = connect.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(ekipman_bilgileri);
         ExportforExcelbutton1.addActionListener(new ActionListener() {
