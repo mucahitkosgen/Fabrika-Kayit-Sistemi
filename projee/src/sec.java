@@ -71,19 +71,6 @@ public class sec extends JFrame{
     }
 
 
-    public static void main (String[]args){
-            JFrame frame = new sec("Alan Seçim Yeri");
-            // frame.setPreferredSize(new Dimension(700, 700));
-            //frame.pack();
-            frame.setSize(700, 700);
-            // frame.setLocationRelativeTo(null);
-            //frame.getContentPane().setSize(500,500);
-            //frame.pack();
-            //frame.setLocationRelativeTo(null);
 
-            frame.setVisible(true);
-
-
-        }
 
     }
