@@ -34,6 +34,12 @@ public class operator extends JFrame {
     public  static String user="root",pass="Kule1845";
     public operator(String title) {
         super(title);
+         connect = database.getConnection();
+        try {
+            statement = connect.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(operator);
         devambutton1.addActionListener(new ActionListener() {
@@ -66,8 +72,8 @@ public class operator extends JFrame {
                     return;
                 }
                 else{
-                    muayene fieldd=new muayene();
-                    fieldd.setVisible(true);
+                    muayene field=new muayene();
+                    field.setVisible(true);
                     JFrame frame = new muayene("Muayene");
                     frame.setSize(700,700);
 
@@ -239,8 +245,14 @@ public class operator extends JFrame {
                     JOptionPane.showMessageDialog(null, "Tarihi boş geçemezsiniz");
                     return;
                 }
-                else {
+                else  {
                     try {
+                        System.out.println(x);
+                        System.out.println(y);
+                        System.out.println(z);
+                        if(statement==null){
+
+                        }
                         statement.executeUpdate("INSERT INTO operator VALUES ('" + x + "','" + y + "','" + z + "')");
                     } catch (SQLException e) {
                         e.printStackTrace();
