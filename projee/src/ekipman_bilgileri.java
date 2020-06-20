@@ -643,62 +643,7 @@ public class ekipman_bilgileri extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new ekipman_bilgileri("ekipmanbilgileri");
-        frame.setSize(700,700);
-        frame.setLocationRelativeTo(null);
-        JComboBox cihazcomboBox=new JComboBox();
-        DefaultComboBoxModel comboBoxModel=new DefaultComboBoxModel();
-        comboBoxModel.setSelectedItem(cihazcomboBox);
-        JComboBox tasiyiciortamcomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(tasiyiciortamcomboBox);
-        JComboBox akimtipicomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(akimtipicomboBox);
-        JComboBox kutupmesafesicomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(kutupmesafesicomboBox);
-        JComboBox miknatislamateknigicomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(miknatislamateknigicomboBox);
-        JComboBox uvisiksiddeticomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(uvisiksiddeticomboBox);
-        JComboBox isikmesafesicomboBox=new JComboBox();
-        comboBoxModel.setSelectedItem(isikmesafesicomboBox);
-        frame.setVisible(true);
-        try {
-            //Class.forName("com.mysql.cj.jdbc.Driver");
-            //connect = DriverManager.getConnection(url, user, pass);
-            Connection connect=database.getConnection();
-            statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from ekipman_bilgileri");
-            while (resultSet.next()) {
-                String cihaz = resultSet.getString(1);
-                String tasiyiciortam = resultSet.getString(2);
-                String muayenebolgesi = resultSet.getString(3);
-                String akimtipi=resultSet.getString(4);
-                String yuzey=resultSet.getString(5);
-                String kaldirmatestitarihi=resultSet.getString(6);
-                String kutupmesafesi=resultSet.getString(7);
-                String miknatislamateknigi=resultSet.getString(8);
-                String uvisiksiddeti=resultSet.getString(9);
-                String isikmesafesi=resultSet.getString(10);
-                String isiksiddeti=resultSet.getString(11);
-                String muayeneortami=resultSet.getString(12);
-                String miknatisgiderimi=resultSet.getString(13);
-                String isilislem=resultSet.getString(14);
-                String yuzeysicakligi=resultSet.getString(15);
-                String isikcihaztanimi=resultSet.getString(16);
-                String muayenebolgesialansiddeti=resultSet.getString(17);
-                String standartsapmalar=resultSet.getString(18);
-                String muayenetarihleri=resultSet.getString(19);
-                String aciklamalar=resultSet.getString(20);
-                System.out.println(cihaz + " " + tasiyiciortam + " " +muayenebolgesi+" "+ akimtipi+" "+yuzey+" "+kaldirmatestitarihi+" "+kutupmesafesi+" "+miknatislamateknigi+" "+uvisiksiddeti+" "+isikmesafesi+" "+isiksiddeti+" "+muayeneortami+" "+miknatisgiderimi+" "+isilislem+" "+yuzeysicakligi+"  "+isikcihaztanimi+" "+muayenebolgesialansiddeti+"+"+standartsapmalar+"+"+muayenetarihleri+""+aciklamalar);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } //catch (ClassNotFoundException e) {
-           // e.printStackTrace();
-        //}
 
-
-    }}
+}
 
 
