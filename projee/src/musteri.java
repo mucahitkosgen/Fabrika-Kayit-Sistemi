@@ -272,35 +272,8 @@ public class musteri extends JFrame{
     public musteri(){
 
     }
-    public static void main(String[] args) {
-        JFrame frame = new musteri("MUSTERİ");
-        // frame.setPreferredSize(new Dimension(700, 700));
-        //frame.pack();
-        frame.setSize(700,700);
 
-
-        frame.setVisible(true);
-        try {
-            // Class.forName("com.mysql.cj.jdbc.Driver");
-            //connect = DriverManager.getConnection(url, user, pass);
-            Connection connect = database.getConnection();
-            statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from musteri");
-            while (resultSet.next()) {
-                String adisoyadi = resultSet.getString(1);//personal bilgileri.
-                String seviye = resultSet.getString(2);
-                String tarih = resultSet.getString(3);
-                System.out.println(adisoyadi + " " + seviye + " " + tarih);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }//catch (ClassNotFoundException e) {
-        // e.printStackTrace();
-
-        //}
-
-
-    }}
+}
 
 
 
