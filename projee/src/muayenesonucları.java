@@ -49,6 +49,12 @@ public class muayenesonucları extends JFrame{
 
     public muayenesonucları(String title) {
         super(title);
+        connect = database.getConnection();
+        try {
+            statement = connect.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(muayenesonucları);
         ExportforExcelbutton1.addActionListener(new ActionListener() {
@@ -65,6 +71,7 @@ public class muayenesonucları extends JFrame{
                 String url = "jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
                 String user = "root";
                 String pass = "Kule1845";
+
                 try {
                     Class.forName("com.mysql.cj.jdbc.Driver");
                 } catch (ClassNotFoundException e) {
@@ -90,6 +97,7 @@ public class muayenesonucları extends JFrame{
                 }
 
                 Document my_pdf_report = new Document();
+
                 try {
                     PdfWriter.getInstance(my_pdf_report, new FileOutputStream("muayenesonucları.pdf"));
                 } catch (DocumentException e) {
