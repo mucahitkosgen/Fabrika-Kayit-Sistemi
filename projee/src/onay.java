@@ -34,6 +34,12 @@ public class onay extends JFrame {
     public  static String user="root",pass="Kule1845";
     public onay(String title) {
         super(title);
+        connect = database.getConnection();
+        try {
+            statement = connect.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(onay);
         devambutton1.addActionListener(new ActionListener() {
@@ -239,14 +245,14 @@ public class onay extends JFrame {
                     JOptionPane.showMessageDialog(null, "Tarihi boş geçemezsiniz");
                     return;
                 }
-                else {
-                    try {
-                        statement.executeUpdate("INSERT INTO onay VALUES ('" + x + "','" + y + "','" + z + "')");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+                try{
+                    statement.executeUpdate("INSERT INTO onay VALUES ('" + x + "','" + y + "','" + z + "')");
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
+
             }
+
 
 
         });
