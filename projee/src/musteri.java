@@ -34,6 +34,12 @@ public class musteri extends JFrame{
     public  static String user="root",pass="Kule1845";
     public musteri(String title) {
         super(title);
+        connect = database.getConnection();
+        try {
+            statement = connect.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(musteri);
         devambutton1.addActionListener(new ActionListener() {
