@@ -49,7 +49,7 @@ public class sec extends JFrame{
                 else if("ONAY".equals(a)){
                     onay field = new onay();
                     field.setVisible(true);
-                    JFrame frame = new onay("Gözetim Muayene Raporu");
+                    JFrame frame = new onay("ONAY");
                     frame.setSize(700, 700);
                     frame.setVisible(true);
                     setVisible(false);
@@ -57,7 +57,7 @@ public class sec extends JFrame{
                 else if("MUSTERI".equals(a)){
                     musteri field = new musteri();
                     field.setVisible(true);
-                    JFrame frame = new musteri("Gözetim Muayene Raporu");
+                    JFrame frame = new musteri("MUSTERI");
                     frame.setSize(700, 700);
                     frame.setVisible(true);
                     setVisible(false);
