@@ -35,6 +35,11 @@ public class yonetici extends JFrame {
 
         JLabel label = new JLabel("yoneticiisim");
 
+
+
+
+
+
         girisbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -43,7 +48,7 @@ public class yonetici extends JFrame {
                 if (x.equalsIgnoreCase("Mücahit") && y.equalsIgnoreCase("KURUM")) {
                     sec field = new sec();
                     field.setVisible(true);
-                    JFrame frame = new sec("Gözetim Muayene Raporu");
+                    JFrame frame = new muayene("MUAYENE");
                     frame.setSize(700, 700);
                     frame.setVisible(true);
 
