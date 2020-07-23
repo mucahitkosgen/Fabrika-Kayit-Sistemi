@@ -1,16 +1,10 @@
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class muayenesonucları extends JFrame{
     private JPanel muayenesonucları;
@@ -57,171 +51,8 @@ public class muayenesonucları extends JFrame{
         }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(muayenesonucları);
-        ExportforExcelbutton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                ExcelExport exporter = new ExcelExport();
-                exporter.export("muayenesonucları");
-
-            }
-        });
-        ExportforPdfbutton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                String url = "jdbc:mysql://localhost:3306/connect_mysql_database?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
-                String user = "root";
-                String pass = "Kule1845";
-
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                Connection conn = null;
-                try {
-                    conn = DriverManager.getConnection(url, user, pass);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                Statement stmt = null;
-                try {
-                    stmt = conn.createStatement();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                ResultSet query_set = null;
-                try {
-                    query_set = stmt.executeQuery("SELECT * FROM muayenesonucları ");
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-                Document my_pdf_report = new Document();
-
-                try {
-                    PdfWriter.getInstance(my_pdf_report, new FileOutputStream("muayenesonucları.pdf"));
-                } catch (DocumentException e) {
-                    e.printStackTrace();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                my_pdf_report.open();
-                PdfPTable my_report_table = new PdfPTable(2);
-                PdfPCell table_cell;
-                while (true) {
-                    try {
-                        if (!query_set.next()) break;
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    String serino = null;
-                    try {
-                        my_report_table.addCell("SERINO");
-                        serino = query_set.getString("serino");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(serino));
-                    my_report_table.addCell(table_cell);
-                    String kaynakno = null;
-                    try {
-                        my_report_table.addCell("KAYNAKNO");
-                        kaynakno = query_set.getString("kaynakno");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(kaynakno));
-                    my_report_table.addCell(table_cell);
-                    String kontroluzunlugu = null;
-                    try {
-                        my_report_table.addCell("KONTROLUZUNLUGU");
-                        kontroluzunlugu = query_set.getString("kontroluzunlugu");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(kontroluzunlugu));
-                    my_report_table.addCell(table_cell);
-                    String kaynakyon = null;
-                    try {
-                        my_report_table.addCell("KAYNAKYON");
-                        kaynakyon = query_set.getString("kaynakyon");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(kaynakyon));
-                    my_report_table.addCell(table_cell);
-                    String kalinlik = null;
-                    try {
-                        my_report_table.addCell("KALINLIK");
-                        kalinlik = query_set.getString("kalinlik");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(kalinlik));
-                    my_report_table.addCell(table_cell);
-                    String cap = null;
-                    try {
-                        my_report_table.addCell("CAP");
-                        cap = query_set.getString("cap");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(cap));
-                    my_report_table.addCell(table_cell);
-                    String hatatipi = null;
-                    try {
-                        my_report_table.addCell("HATATIPI");
-                        hatatipi = query_set.getString("hatatipi");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(hatatipi));
-                    my_report_table.addCell(table_cell);
-                    String hataninyeri = null;
-                    try {
-                        my_report_table.addCell("HATANINYERI");
-                        hataninyeri = query_set.getString("hataninyeri");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(hataninyeri));
-                    my_report_table.addCell(table_cell);
-                    String sonuc = null;
-                    try {
-                        my_report_table.addCell("SONUC");
-                        sonuc = query_set.getString("sonuc");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    table_cell = new PdfPCell(new Phrase(sonuc));
-                    my_report_table.addCell(table_cell);
-
-                }
-                try {
-                    my_pdf_report.add(my_report_table);
-                } catch (DocumentException e) {
-                    e.printStackTrace();
-                }
-                my_pdf_report.close();
 
 
-                try {
-                    query_set.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
         silbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -247,16 +78,68 @@ public class muayenesonucları extends JFrame{
 
             }
         });
-        ExportforAllExcelbutton1.addActionListener(new ActionListener() {
+
+
+
+        devambutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                ExcelExport exporter = new ExcelExport();
-                exporter.export("onay,musteri,operator,degerlendiren,muayene,ekipman_bilgileri,muayenesonucları");
+                String x = serinotextField1.getText();
+                String y = kaynaknotextField1.getText();
+                String z = kontroluzunlugutextField1.getText();
+                String a = kaynakyonTextField1.getText();
+                String b = kalinliktextField1.getText();
+                String c = captextField1.getText();
+                String d = hatatipitextField1.getText();
+                String f = hataninyeritextField1.getText();
+                String g = sonuccomboBox1.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null, g);
 
-            }
-        });
+                if ("".equals(x)) {
+                    JOptionPane.showMessageDialog(null, "Seri no boş geçilemez");
+                    return;
+                } else if ("".equals(y)) {
+                    JOptionPane.showMessageDialog(null, "Kaynak no boş geçemezsiniz");
+                    return;
+                } else if ("".equals(z)) {
+                    JOptionPane.showMessageDialog(null, "Kontrol uzunluğu boş geçemezsiniz");
+                    return;
+                } else if ("".equals(a)) {
+                    JOptionPane.showMessageDialog(null, "Kaynak yon boş geçemezsin");
+                    return;
+                } else if ("".equals(b)) {
+                    JOptionPane.showMessageDialog(null, "Kalınlık boş geçemezsiniz");
+                    return;
+                } else if (g.equalsIgnoreCase("RED")) {
+                    if ("".equals(d)) {
+                        JOptionPane.showMessageDialog(null, "Sonuç RED ise hata tipini boş geçemezsin");
 
+                        return;
+                    } else if ("".equals(f)) {
+                        JOptionPane.showMessageDialog(null, "Sonuç RED ise hata yerini boş geçemezsin");
+                        return;
+                    }
+                    sec field = new sec();
+                    field.setVisible(true);
+                    JFrame frame = new sec("PERSONAL SEC");
+                    frame.setSize(700, 700);
+                    frame.setVisible(true);
 
+                    setVisible(false);
+                }
+
+                else {
+                        sec field = new sec();
+                        field.setVisible(true);
+                        JFrame frame = new sec("PERSONAL SEC");
+                        frame.setSize(700, 700);
+                        frame.setVisible(true);
+
+                        setVisible(false);
+
+                    }
+
+            }});
         okbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -340,6 +223,7 @@ public class muayenesonucları extends JFrame{
             }
         });
     }
+
 
     public muayenesonucları() {
 
